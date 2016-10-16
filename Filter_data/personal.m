@@ -1,0 +1,25 @@
+%% Creating personal data cell array
+personal.nawar{1}= 73.815;
+personal.nawar{2}= 180.5;
+personal.bob{1}= 87.34;
+personal.bob{2}= 176.8;
+personal.alex{1}= 69.69;
+personal.alex{2}= 160.6;
+personal.nick{1}= 85.1;
+personal.nick{2}= 179.9;
+personal.emanuele{1}= 70.4;
+personal.emanuele{2}= 167.4;
+personal.thomas{1}= 80.5;
+personal.thomas{2}= 177.4;
+personal.sarah{1}=72.37;
+personal.sarah{2}=171.6;
+personal.willem{1}=93.49;
+personal.willem{2}=190.1;
+personal.zahir{1}= 78.2;
+personal.zahir{2}= 171.5;
+personal.ugur{1}= 85.8;
+personal.ugur{2}=183.0;
+personal.berit{1}=78.1;
+personal.berit{2}=174.2;
+personal.rox{1}= 73.1;
+personal.rox{2}=168.0;
