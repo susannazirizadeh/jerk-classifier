@@ -42,7 +42,7 @@ for o=1:length(speed)
         title(['Jerk of Smartphone on the hip and force plate, ' num2str(speed(o)) 'km/h'])
         xlabel('Jerk force plate [N]')
         ylabel('Jerk device [m/s^3]')
-        legend ('Participant 1','Participate 2','Participate 3','Participate 4','Participate 5','Participate 6','Participate 7','Participate 8','Participate 9','Participate 10','Participate 11','Participate 12','Location','southeast')
+        legend ('Participant 1','Participant 1','Participate 2','Participant 2','Participate 3','Participant 3','Participate 4','Participant 4','Participate 5','Participant 5','Participate 6','Participant 6','Participate 7','Participant 7','Participate 8','Participant 8','Participate 9','Participant 9','Participate 10','Participant 10','Participate 11','Participant 11','Participate 12','Participant 12','Location','southeast')
         grid on
         hold on
         %    axis([10 100  0 300000])
@@ -52,7 +52,7 @@ for o=1:length(speed)
 end
 %  end
 
-%% Display thefitted line 
+%% Display the fitted line 
 speed = [5 8 12];
 device  = cellstr(['SP1';'SW1';'SP2';'SW2';'FP ']);
 % figure;
