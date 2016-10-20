@@ -1,30 +1,30 @@
 load mjerk_xyz_int          % Data set with the mean of the data with jerk data from the phone and the force  of the force plate
- load mjerkjerk_xyz_int     % Data set with the mean of the data with jerk data from the phone and the force rate of the force plate 
+ load mjerk_xyz_int     % Data set with the mean of the data with jerk data from the phone and the force rate of the force plate 
  
 % %% Fit a line for smartphone and forceplate data 
 % speed = [5 8 12];
 % 
 % for o=1:length(speed)
 %     figure;
-%     mjerkjerk_xyz_int1= NaN(6,12);
-%     mjerkjerk_xyz_int2= NaN(6,12);
+%     mjerk_xyz_int1= NaN(6,12);
+%     mjerk_xyz_int2= NaN(6,12);
 %     for m= 2:12
 %         for p= 1:6
-%             if isempty( mjerkjerk_xyz_int.treadmill{m}{3}{o}{p} ) ~= 1
-%                 if isempty( mjerkjerk_xyz_int.treadmill{m}{5}{o}{p} ) ~= 1
-%                     mjerkjerk_xyz_int1(p,m)= mjerkjerk_xyz_int.treadmill{m}{3}{o}{p};   % Smartphone data combined into a matrix for the linear regression
-%                     mjerkjerk_xyz_int2(p,m)= mjerkjerk_xyz_int.treadmill{m}{5}{o}{p};   % Force plate data combined into a matrix for the linear regression
+%             if isempty( mjerk_xyz_int.treadmill{m}{3}{o}{p} ) ~= 1
+%                 if isempty( mjerk_xyz_int.treadmill{m}{5}{o}{p} ) ~= 1
+%                     mjerk_xyz_int1(p,m)= mjerk_xyz_int.treadmill{m}{3}{o}{p};   % Smartphone data combined into a matrix for the linear regression
+%                     mjerk_xyz_int2(p,m)= mjerk_xyz_int.treadmill{m}{5}{o}{p};   % Force plate data combined into a matrix for the linear regression
 %                 end
 %             end
 %         end   
 %         
 %         try
-%             f=fit(mjerkjerk_xyz_int2(:,m),mjerkjerk_xyz_int1(:,m),'poly1');             % Fitting model 
+%             f=fit(mjerk_xyz_int2(:,m),mjerk_xyz_int1(:,m),'poly1');             % Fitting model 
 %         catch
 %             display(['fitting error for participant ' , num2str(m)])
 %         end
 %         display(f)
-%         plot (mjerkjerk_xyz_int2(1:6,1:6),mjerkjerk_xyz_int1(1:6,1:6),'*',mjerkjerk_xyz_int2(1:6,7:12),mjerkjerk_xyz_int1(1:6,7:12),'o') % Plot data points
+%         plot (mjerk_xyz_int2(1:6,1:6),mjerk_xyz_int1(1:6,1:6),'*',mjerk_xyz_int2(1:6,7:12),mjerk_xyz_int1(1:6,7:12),'o') % Plot data points
 %         hold on
 %         plot(f,'-');  % Plot linear regression line                                                                                                                      
 %         hold on
@@ -42,6 +42,20 @@ load mjerk_xyz_int          % Data set with the mean of the data with jerk data 
     % Jerk from smartphone= responds variable
     %  Load rate from force place= predictor variable 
     % Speed= predictore variable
+    % Body weight
+    
+    % Per weight
+weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 73.1];
+
+BWper=[ 0.2 0.5 0.7 0.8 0.9 1.0];
+
+% BWweight= weight* BWper;
+
+for i=1:6
+    for j=1:12
+    BWperweight(i,j)=weight(j)*BWper(i);
+    end 
+end   
     
 speed = [5 8 12];
 device  = cellstr(['SP1';'SW1';'SP2';'SW2';'FP ']);
@@ -53,13 +67,14 @@ i=0; % Participant counter
 for m= 1:11
     figure;
     for  p=1:6
-        if isempty( mjerkjerk_xyz_int.treadmill{m}{3}{1}{p} ) ~= 1
-            if isempty( mjerkjerk_xyz_int.treadmill{m}{3}{2}{p} ) ~= 1
-                if isempty( mjerkjerk_xyz_int.treadmill{m}{3}{3}{p} ) ~= 1         
-                    results{m}(:,1)= cell2mat([mjerkjerk_xyz_int.treadmill{m}{5}{1}(1:6)';mjerkjerk_xyz_int.treadmill{m}{5}{2}(1:6)';mjerkjerk_xyz_int.treadmill{m}{5}{3}(1:6)']);
-                    results{m}(:,2)= cell2mat([mjerkjerk_xyz_int.treadmill{m}{3}{1}(1:6)';mjerkjerk_xyz_int.treadmill{m}{3}{2}(1:6)';mjerkjerk_xyz_int.treadmill{m}{3}{3}(1:6)']);
+        if isempty( mjerk_xyz_int.treadmill{m}{3}{1}{p} ) ~= 1
+            if isempty( mjerk_xyz_int.treadmill{m}{3}{2}{p} ) ~= 1
+                if isempty( mjerk_xyz_int.treadmill{m}{3}{3}{p} ) ~= 1         
+                    results{m}(:,1)= cell2mat([mjerk_xyz_int.treadmill{m}{5}{1}(1:6)';mjerk_xyz_int.treadmill{m}{5}{2}(1:6)';mjerk_xyz_int.treadmill{m}{5}{3}(1:6)']);
+                    results{m}(:,2)= cell2mat([mjerk_xyz_int.treadmill{m}{3}{1}(1:6)';mjerk_xyz_int.treadmill{m}{3}{2}(1:6)';mjerk_xyz_int.treadmill{m}{3}{3}(1:6)']);
                     results{m}(:,3)= ([5,5,5,5,5,5,8,8,8,8,8,8,12,12,12,12,12,12]);
-                    results{m}(:,4)=([m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m]);
+                    results{m}(:,4)=([BWperweight(1:6,m);BWperweight(1:6,m);BWperweight(1:6,m)]);
+                    results{m}(:,5)=([m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m]);
                 end
             end
         end
@@ -95,11 +110,8 @@ for m= 1:11
         grid on
 end
 
-%% Linear regression model
-
-    
-tbl=([results{1}(:,1:4);results{2}(:,1:4);results{3}(:,1:4);results{4}(:,1:4);results{5}(:,1:4);results{6}(:,1:4);results{7}(:,1:4);results{8}(:,1:4);results{9}(:,1:4);results{10}(:,1:4);results{11}(:,1:4)]);
-% tbl=table(preliminary(:,1:4),'VariableNames',{'ForceRateFP','JerkSpartphone','Speed','Participant'});
-% lme=  fitlme(tbl,tbl(:,2)+(1|tbl(:,4)+(tbl(:,1)-1|tbl(:,4));
-
-%  lme=  fitlme(tbl,'JerkSmartphone+(1|Participant)+(ForceRateFP-1|Participant)');
+%% Linear regression model  
+C=([results{1}(:,:);results{2}(:,:);results{3}(:,:);results{4}(:,:);results{5}(:,:);results{6}(:,:);results{7}(:,:);results{8}(:,:);results{9}(:,:);results{10}(:,:);results{11}(:,:)]);
+tbl= table(C(:,1),C(:,2),C(:,3),C(:,4),C(:,5),'VariableNames',{'ForceRateFP','JerkSmartphone','Speed','BW','Participant'});
+lme=  fitlme(tbl,'JerkSmartphone~ForceRateFP+Speed+BW+(1|Participant)');
+display(lme)
