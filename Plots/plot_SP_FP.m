@@ -1,43 +1,43 @@
 load mjerk_xyz_int          % Data set with the mean of the data with jerk data from the phone and the force  of the force plate
  load mjerk_xyz_int     % Data set with the mean of the data with jerk data from the phone and the force rate of the force plate 
  
-% %% Fit a line for smartphone and forceplate data 
-% speed = [5 8 12];
-% 
-% for o=1:length(speed)
-%     figure;
-%     mjerk_xyz_int1= NaN(6,12);
-%     mjerk_xyz_int2= NaN(6,12);
-%     for m= 2:12
-%         for p= 1:6
-%             if isempty( mjerk_xyz_int.treadmill{m}{3}{o}{p} ) ~= 1
-%                 if isempty( mjerk_xyz_int.treadmill{m}{5}{o}{p} ) ~= 1
-%                     mjerk_xyz_int1(p,m)= mjerk_xyz_int.treadmill{m}{3}{o}{p};   % Smartphone data combined into a matrix for the linear regression
-%                     mjerk_xyz_int2(p,m)= mjerk_xyz_int.treadmill{m}{5}{o}{p};   % Force plate data combined into a matrix for the linear regression
-%                 end
-%             end
-%         end   
-%         
-%         try
-%             f=fit(mjerk_xyz_int2(:,m),mjerk_xyz_int1(:,m),'poly1');             % Fitting model 
-%         catch
-%             display(['fitting error for participant ' , num2str(m)])
-%         end
-%         display(f)
-%         plot (mjerk_xyz_int2(1:6,1:6),mjerk_xyz_int1(1:6,1:6),'*',mjerk_xyz_int2(1:6,7:12),mjerk_xyz_int1(1:6,7:12),'o') % Plot data points
-%         hold on
-%         plot(f,'-');  % Plot linear regression line                                                                                                                      
-%         hold on
-%         title(['Jerk of Smartphone between the sholder baldes and force plate, ' num2str(speed(o)) 'km/h'])
-%         xlabel('Ground reaction force by force plate [N]')
-%         ylabel('Jerk device [m/s^3]')
-%         legend ('Participate 2','Participate 3','Participate 4','Participate 5','Participate 6','Participate 7','Participate 8','Participate 9','Participate 10','Participate 11','Participate 12','Location','northwest')
-%         grid on
-%         filename= (['jerk_SP2_FP_' num2str(speed(o)) 'km.pdf']);
-%         print(filename,'-dpdf')
-%     end
-% end
-% 
+%% Fit a line for smartphone and forceplate data 
+speed = [5 8 12];
+
+for o=1:length(speed)
+    figure;
+    mjerk_xyz_int1= NaN(6,12);
+    mjerk_xyz_int2= NaN(6,12);
+    for m= 2:12
+        for p= 1:6
+            if isempty( mjerk_xyz_int.treadmill{m}{3}{o}{p} ) ~= 1
+                if isempty( mjerk_xyz_int.treadmill{m}{5}{o}{p} ) ~= 1
+                    mjerk_xyz_int1(p,m)= mjerk_xyz_int.treadmill{m}{3}{o}{p};   % Smartphone data combined into a matrix for the linear regression
+                    mjerk_xyz_int2(p,m)= mjerk_xyz_int.treadmill{m}{5}{o}{p};   % Force plate data combined into a matrix for the linear regression
+                end
+            end
+        end   
+        
+        try
+            f=fit(mjerk_xyz_int2(:,m),mjerk_xyz_int1(:,m),'poly1');             % Fitting model 
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        display(f)
+        plot (mjerk_xyz_int2(1:6,1:6),mjerk_xyz_int1(1:6,1:6),'*',mjerk_xyz_int2(1:6,7:12),mjerk_xyz_int1(1:6,7:12),'o') % Plot data points
+        hold on
+        plot(f,'-');  % Plot linear regression line                                                                                                                      
+        hold on
+        title(['Jerk of Smartphone between the sholder baldes and force plate, ' num2str(speed(o)) 'km/h'])
+        xlabel('Ground reaction force by force plate [N]')
+        ylabel('Jerk device [m/s^3]')
+        legend ('Participate 2','Participate 3','Participate 4','Participate 5','Participate 6','Participate 7','Participate 8','Participate 9','Participate 10','Participate 11','Participate 12','Location','northwest')
+        grid on
+        filename= (['jerk_SW1_FP_' num2str(speed(o)) 'km.pdf']);
+        print(filename,'-dpdf')
+    end
+end
+
 %% Linear regression model with two variables
     % Jerk from smartphone= responds variable
     %  Load rate from force place= predictor variable 
@@ -110,8 +110,3 @@ for m= 1:11
         grid on
 end
 
-%% Linear regression model  
-C=([results{1}(:,:);results{2}(:,:);results{3}(:,:);results{4}(:,:);results{5}(:,:);results{6}(:,:);results{7}(:,:);results{8}(:,:);results{9}(:,:);results{10}(:,:);results{11}(:,:)]);
-tbl= table(C(:,1),C(:,2),C(:,3),C(:,4),C(:,5),'VariableNames',{'ForceRateFP','JerkSmartphone','Speed','BW','Participant'});
-lme=  fitlme(tbl,'JerkSmartphone~ForceRateFP+Speed+BW+(1|Participant)');
-display(lme)
