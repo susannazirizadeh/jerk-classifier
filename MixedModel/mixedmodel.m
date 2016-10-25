@@ -176,7 +176,7 @@ print(filename,'-dpdf')
 C=([results{1}(:,:);results{2}(:,:);results{3}(:,:);results{4}(:,:);results{5}(:,:);results{6}(:,:);results{7}(:,:);results{8}(:,:);results{9}(:,:);results{10}(:,:);results{11}(:,:)]);
 tbl= table(C(:,1),C(:,2),C(:,3),C(:,4),C(:,5),'VariableNames',{'ForceRateFP','JerkSmartphone','Speed','BW','Participant'});
 lme1=  fitlme(tbl,'JerkSmartphone~ForceRateFP+Speed+BW+(1|Participant)+(ForceRateFP-1|Participant)');  % Mixed model with random effect intercept and coefficient 
-lme2=  fitlme(tbl,'JerkSmartphone~ForceRateFP+Speed+BW+(1|Participant)');       % Mixed model with random effect intercept 
+lme2=  fitlme(tbl,'JerkSmartphone~ForceRateFP+Speed+BW+(1|Participant)');     figure   % Mixed model with random effect intercept 
 lme3=  fitlme(tbl,'JerkSmartphone~ForceRateFP+Speed+BW');                       % Mixed model without random effect intercept
 
 %% 3.Check significants of random effect
@@ -191,6 +191,10 @@ title('Observed Values versus Fitted Values')
 xlabel('Fitted Values')
 ylabel('Observed Values')
 %% 6.Plot a histogram to visually confirm that the mean of the Pearson residuals is equal to 0
+figure
 plotResiduals(lme1,'histogram','ResidualType','Pearson')
 %% 7.Plot the Pearson residuals versus the fitted values
+figure
 plotResiduals(lme1,'fitted','ResidualType','Pearson')
+
+%% 
