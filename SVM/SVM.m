@@ -11,8 +11,6 @@
 load results
 C=([results{1}(:,:);results{2}(:,:);results{3}(:,:);results{4}(:,:);results{5}(:,:);results{6}(:,:);results{7}(:,:);results{8}(:,:);results{9}(:,:);results{10}(:,:);results{11}(:,:)]);
 %% Train SVM Classifier Using Custom Kernelfigure
-figure;
-gscatter(C(:,1),C(:,2),C(:,3));
-
-Mdl1 = fitcsvm(X,Y,'KernelFunction','mysigmoid','Standardize',true);
-
+X=[C(:,1),C(:,2)];
+Y=C(:,3);
+Mdl = fitrsvm(X,Y)
