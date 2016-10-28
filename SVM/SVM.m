@@ -14,3 +14,4 @@ C=([results{1}(:,:);results{2}(:,:);results{3}(:,:);results{4}(:,:);results{5}(:
 X=[C(:,1),C(:,2)];
 Y=C(:,3);
 Mdl = fitrsvm(X,Y)
+
