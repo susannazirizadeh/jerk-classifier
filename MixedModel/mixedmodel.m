@@ -6,7 +6,11 @@
 % 5. Generate the fitted conditional mean values for the model
 % 6.Plot a histogram to visually confirm that the mean of the Pearson residuals is equal to 0
 % 7.Plot the Pearson residuals versus the fitted values
- load results 
+load results_grf_SP1
+load results_grf_SW1
+load results_grf_SP2
+load results_grf_SW2
+load results
  
  %% 1.Plot each individual 
      

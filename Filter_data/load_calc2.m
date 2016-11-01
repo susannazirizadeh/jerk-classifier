@@ -1,27 +1,23 @@
-%% Transforming raw_int into jerk_data for phone between shoulder blades with cutoff before 4000 and after 8000
+%% Transforming raw_int into aload
 % m= participants
 % n= device
 % o= speed
 % p= gravity
-
 load raw_int
-
 %% Allocat aload.treadmill
 aload.treadmill= cell(1,12);
 for m= 1:12
     aload.treadmill{m}= cell(1,5);
     for n=1:5
-    aload.treadmill{m}{n}= cell(1,3);
+        aload.treadmill{m}{n}= cell(1,3);
         for o=1:3
-        aload.treadmill{m}{n}{o}= cell(1,6);
+            aload.treadmill{m}{n}{o}= cell(1,6);
             for p=1:6
                 aload.treadmill{m}{n}{o}{p}= [];
             end
         end
     end
 end
-
-
 %% Transform raw_int into jerk in gravity direction
 for m= 1:12
     for n=1:4%5

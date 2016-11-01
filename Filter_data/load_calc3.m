@@ -1,32 +1,30 @@
+%% Transforming raw_int into jerk_jerk with cutoff before 1000 and 1000 before end
 load raw_int
-%% Transfer into j_xyz part 2
-% Allocat jerkjerk_xyz_int_data.treadmill
-jerkjerk_xyz_int.treadmill= cell(1,12);
+%% Transfer into jerk_jerk part 2
+% Allocat jerk_jerk_data.treadmill
+jerk_jerk.treadmill= cell(1,12);
 for m= 1:12
-    jerkjerk_xyz_int.treadmill{m}= cell(1,5);
+    jerk_jerk.treadmill{m}= cell(1,5);
     for n=1:5
-    jerkjerk_xyz_int.treadmill{m}{n}= cell(1,3);
+        jerk_jerk.treadmill{m}{n}= cell(1,3);
         for o=1:3
-        jerkjerk_xyz_int.treadmill{m}{n}{o}= cell(1,6);
+            jerk_jerk.treadmill{m}{n}{o}= cell(1,6);
             for p=1:6
-                jerkjerk_xyz_int.treadmill{m}{n}{o}{p}= [];
+                jerk_jerk.treadmill{m}{n}{o}{p}= [];
             end
         end
     end
 end
-
 %% Transform raw_int into jerk in original direction
-% load aload
-for m= 1:12
-    for n=1:4%5
+for m= 1:12 %Participants
+    for n=1:4%5 % Excluding the Forceplate
         if isempty(raw_int.treadmill{m}{n}) ~= 1
-            for o=1:3
+            for o=1:3   % Speed
                 if isempty( raw_int.treadmill{m}{n}{o}) ~= 1
-                    for p=1:6
-                        disp('working')
+                    for p=1:6   % Gravity
                         if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
-                                jerkjerk_xyz_int.treadmill{m}{n}{o}{p}(:,2)=jerk_xyz(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
-                                jerkjerk_xyz_int.treadmill{m}{n}{o}{p}(:,1)=raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1);
+                                jerk_jerk.treadmill{m}{n}{o}{p}(:,2)=jerk_xyz(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
+                                jerk_jerk.treadmill{m}{n}{o}{p}(:,1)=raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1);
                         end
                     end
                 end
@@ -34,67 +32,50 @@ for m= 1:12
         end
     end
 end
-
-%% Entering the force plate data using "jerk" function or below just using raw force plate data
+%% Entering the force plate data using "jerk" function 
 for m= 1:12
     if isempty(raw_int.treadmill{m}{5}) ~= 1
         for o=1:3
             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
                 for p=1:6
                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
-                        jerkjerk_xyz_int.treadmill{m}{5}{o}{p}(:,2)=jerk(raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,6));
-                        jerkjerk_xyz_int.treadmill{m}{5}{o}{p}(:,1)=raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1);
+                        jerk_jerk.treadmill{m}{5}{o}{p}(:,2)=jerk(raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,6));
+                        jerk_jerk.treadmill{m}{5}{o}{p}(:,1)=raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1);
                     end
                 end
             end
         end
     end
 end
-% %% Entering the force plate data  
-% for m= 1:12
-%     if isempty(raw_int.treadmill{m}{5}) ~= 1
-%         for o=1:3
-%             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
-%                 for p=1:6
-%                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
-%                         jerkjerk_xyz_int.treadmill{m}{5}{o}{p}(:,2)=raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,6);
-%                         jerkjerk_xyz_int.treadmill{m}{5}{o}{p}(:,1)=raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1);
-%                     end
-%                 end
-%             end
-%         end
-%     end
-% end
 %% Develope mean of the data 
 % Allocate mjerk_xyz
-mjerkjerk_xyz_int.treadmill= cell(1,12);                                                    
+mjerk_jerk.treadmill= cell(1,12);
 for m= 1:12
-    mjerkjerk_xyz_int.treadmill{m}= cell(1,5);
+    mjerk_jerk.treadmill{m}= cell(1,5);
     for n=1:5
-    mjerkjerk_xyz_int.treadmill{m}{n}= cell(1,3);
+        mjerk_jerk.treadmill{m}{n}= cell(1,3);
         for o=1:3
-        mjerkjerk_xyz_int.treadmill{m}{n}{o}= cell(1,6);
+            mjerk_jerk.treadmill{m}{n}{o}= cell(1,6);
             for p=1:6
-                 mjerkjerk_xyz_int.treadmill{m}{n}{o}{p}= [];
-             end
+                mjerk_jerk.treadmill{m}{n}{o}{p}= [];
+            end
         end
     end
 end
 %%
-% Calculate mean of jerkjerk_xyz_int in the gravity direction (in this case 4th
+% Calculate mean of jerk_jerk in the gravity direction (in this case 4th
 % colum)
 for m= 1:12
     for n=1:5
-        if isempty(jerkjerk_xyz_int.treadmill{m}{n}) ~= 1
+        if isempty(jerk_jerk.treadmill{m}{n}) ~= 1
             for o=1:3
-                if isempty(jerkjerk_xyz_int.treadmill{m}{n}{o}) ~= 1
+                if isempty(jerk_jerk.treadmill{m}{n}{o}) ~= 1
                     for p=1:6
-                        if isempty(jerkjerk_xyz_int.treadmill{m}{n}{o}{p}) ~= 1
-                            data = jerkjerk_xyz_int.treadmill{m}{n}{o}{p}(:,2);
-                            
-                            if length(data) > 0
+                        if isempty(jerk_jerk.treadmill{m}{n}{o}{p}) ~= 1
+                            data = jerk_jerk.treadmill{m}{n}{o}{p}(:,2);
+                            if isempty(data) ~= 1%length(data) > 0
                                 display(mean(data));
-                                mjerkjerk_xyz_int.treadmill{m}{n}{o}{p}= mean(data);
+                                mjerk_jerk.treadmill{m}{n}{o}{p}= mean(data);
                             end
                         end
                     end
@@ -103,19 +84,13 @@ for m= 1:12
         end
     end
 end
-
-
 %% Per weight
-weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 73.1];
-
-BWper=[ 0.2 0.5 0.7 0.8 0.9 1.0];
-
-% BWweight= weight* BWper;
-
+weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 73.1]; %Weights of each participants
+BWper=[ 0.2 0.5 0.7 0.8 0.9 1.0]; % Bodyweight percentages that they were running at
 for i=1:6
     for j=1:12
-    BWperweight(i,j)=weight(j)*BWper(i);
-    end 
+        BWperweight(i,j)=weight(j)*BWper(i);
+    end
 end
 
 %% Display the mean of the jerk per weight
@@ -127,9 +102,9 @@ device  = cellstr(['SP1';'SW1';'SP2';'SW2';'FP ']);
         result= NaN(6,12);
         for m=1:11
             for p= 1:6
-                if isempty( mjerkjerk_xyz_int.treadmill{m}{3}{3}{p} ) ~= 1
+                if isempty( mjerk_jerk.treadmill{m}{3}{3}{p} ) ~= 1
                     
-                    result(p,m)= mjerkjerk_xyz_int.treadmill{m}{3}{3}{p};
+                    result(p,m)= mjerk_jerk.treadmill{m}{3}{3}{p};
                 end
             end
         end
