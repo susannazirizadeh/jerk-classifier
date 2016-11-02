@@ -77,7 +77,7 @@ for m= 1:12
         for o=1:3
             mjerk_grf.treadmill{m}{n}{o}= cell(1,6);
             for p=1:6
-                mjerk_grf.treadmill{m}{n}{o}{p}= [];
+                mjerk_grf.treadmill{m}{n}{o}{p}= NaN;
             end
         end
     end
