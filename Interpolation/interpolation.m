@@ -54,6 +54,7 @@ for m= 1:12
     end
 end
 
+
 %% Exclude repeted values
 for m= 1:12
     for n=1:5
@@ -125,4 +126,5 @@ for m= 1:12
         end
     end
 end
+
 
