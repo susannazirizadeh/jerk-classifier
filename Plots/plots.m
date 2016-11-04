@@ -1,7 +1,7 @@
 
 %% Per weight
  load mjerk_jerk
-weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 73.1]; %Weights of each participants
+weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 69.7]; %Weights of each participants
 BWper=[ 0.2 0.5 0.7 0.8 0.9 1.0]; % Bodyweight percentages that they were running at
 for i=1:6
     for j=1:12

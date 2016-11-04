@@ -51,10 +51,27 @@ for m= 1:12
     end
 end 
 
+
+for m= 1:12
+    if isempty(raw_data.outdoor{m}) ~= 1
+        if isempty(raw_data.outdoor{m}{3}) ~= 1
+            for o=1:5
+                if isempty(raw_data.outdoor{m}{3}{o}) ~= 1
+                    for p=1:7
+                        if isempty(raw_data.outdoor{m}{3}{o}{p}) ~= 1
+                            raw_data.outdoor{m}{3}{o}{p}(:,4)= NaN;
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
 %% Exclude repeted values
 for m= 1:12 %participants
     if isempty(raw_data.outdoor{m}) ~= 1
-        for n=1:3 %devices
+        for n=1:2 %devices
             if isempty(raw_data.outdoor{m}{n}) ~= 1
                 for o=1:5 %speed
                     if isempty( raw_data.outdoor{m}{n}{o}) ~= 1
