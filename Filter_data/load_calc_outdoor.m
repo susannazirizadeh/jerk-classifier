@@ -18,7 +18,7 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 %     for n=1:length(device)
 %         jerk_grf.outdoor{m}{n}= cell(1,length(speed));
 %         for o=1:length(speed)
-%             jerk_grf.outdoor{m}{n}{o}= cell(1,length(con));
+%             jerk_grf.outdoor{m}{n}{o}= cell(1,length(con))cell(1,length(con));
 %             for p=1:length(con)
 %                 jerk_grf.outdoor{m}{n}{o}{p}= [];
 %             end

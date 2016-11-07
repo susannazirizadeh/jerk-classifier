@@ -57,7 +57,7 @@ end
 
 %% Exclude repeted values
 for m= 1:12
-    for n=1:5
+    for n=5%1:5
         if isempty(raw_data.treadmill{m}{n}) ~= 1
             for o=1:3
                 if isempty( raw_data.treadmill{m}{n}{o}) ~= 1
@@ -66,7 +66,7 @@ for m= 1:12
                             j=1;k=1;
                             for i=2:length(raw_data.treadmill{m}{n}{o}{p}(:,2))
                                 if raw_data.treadmill{m}{n}{o}{p}(i,2)~=raw_data.treadmill{m}{n}{o}{p}(i-1,2);
-                                    for q=1:4
+                                    for q=1:5
                                         raw_zero.treadmill{m}{n}{o}{p}(j,q)= raw_data.treadmill{m}{n}{o}{p}(i,q);
                                     end
                                     j=j+1;
