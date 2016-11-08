@@ -17,19 +17,19 @@ for button= 1:4
     for m= 1:12
         x1=results_jerkpos.treadmill{button}{m}(1:6,1) ;y1=results_jerkpos.treadmill{button}{m}(1:6,2); idx = isfinite(x1) & isfinite(y1);
         try
-            f1=fit(x1(idx),y1(idx),'poly1');
+            f1=fit(x1(idx),y1(idx),'poly2');
         catch
             display(['fitting error for participant ' , num2str(m)])
         end
         x2=results_jerkpos.treadmill{button}{m}(7:12,1) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
         try
-            f2=fit(x2(idx),y2(idx),'poly1');
+            f2=fit(x2(idx),y2(idx),'poly2');
         catch
             display(['fitting error for participant ' , num2str(m)])
         end
         x3=results_jerkpos.treadmill{button}{m}(13:18,1) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
         try
-            f3=fit(x2(idx),y2(idx),'poly1');
+            f3=fit(x3(idx),y3(idx),'poly2');
         catch
             display(['fitting error for participant ' , num2str(m)])
         end
@@ -41,19 +41,19 @@ for button= 1:4
         plot(f1,'-');
         plot(f2,'-');
         plot(f3,'-');
-        title(['Participants ', num2str(m), device{n}] );
+        title(['Participants ', num2str(m), device{button}] );
         xlabel('Forceplate Data [N]');
         ylabel('Jerk Data from smartphone [m/s^3]');
         legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
     end
+    filename= (['jerk_pos_',device{button}, '.pdf']);
+print(filename,'-dpdf')
 end
 
-filename= ('jerk_SP1_FP_each_SW2.pdf');
-print(filename,'-dpdf')
  
-%%  
+%%  Linear mixedmodel
 % 1.Plot Forceplate data versus the jerk estimate
-
+button=3;
 C=([results_jerkpos.treadmill{button}{1}(:,:);results_jerkpos.treadmill{button}{2}(:,:);results_jerkpos.treadmill{button}{3}(:,:);results_jerkpos.treadmill{button}{4}(:,:);results_jerkpos.treadmill{button}{5}(:,:);results_jerkpos.treadmill{button}{6}(:,:);results_jerkpos.treadmill{button}{7}(:,:);results_jerkpos.treadmill{button}{8}(:,:);results_jerkpos.treadmill{button}{9}(:,:);results_jerkpos.treadmill{button}{10}(:,:);results_jerkpos.treadmill{button}{11}(:,:);results_jerkpos.treadmill{button}{12}(:,:)]);
 figure;
 plot(C(:,2),C(:,1),'ro')
