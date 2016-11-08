@@ -10,9 +10,9 @@ for i=1:6
     end
 end
 %%
-for m= 2%3:12
+for m= 3:12
     if isempty(raw_int.treadmill{m}{5}) ~= 1
-        for o= 2:3
+        for o= 1:3
             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
                 for p=1:6
                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
@@ -25,9 +25,9 @@ for m= 2%3:12
 end
 
 
-for m= 2%:12
+for m= 1%:12
     if isempty(raw_int.treadmill{m}{5}) ~= 1
-        for o=1%:3
+        for o=1:3
             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
                 for p=1:6
                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1

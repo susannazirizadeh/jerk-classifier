@@ -1,16 +1,16 @@
-%% Transforming raw_int into jerk_pos with cutoff before 1000 and 1000 before end
+%% Transforming raw_int into jerk_jerk_pos with cutoff before 1000 and 1000 before end
 % load raw_int
-%% Transfer into jerk_pos part 2
-% Allocat jerk_pos_data.treadmill
-jerk_pos.treadmill= cell(1,12);
+%% Transfer into jerk_jerk_pos part 2
+% Allocat jerk_jerk_pos_data.treadmill
+jerk_jerk_pos.treadmill= cell(1,12);
 for m= 1:12
-    jerk_pos.treadmill{m}= cell(1,5);
+    jerk_jerk_pos.treadmill{m}= cell(1,5);
     for n=1:5
-        jerk_pos.treadmill{m}{n}= cell(1,3);
+        jerk_jerk_pos.treadmill{m}{n}= cell(1,3);
         for o=1:3
-            jerk_pos.treadmill{m}{n}{o}= cell(1,6);
+            jerk_jerk_pos.treadmill{m}{n}{o}= cell(1,6);
             for p=1:6
-                jerk_pos.treadmill{m}{n}{o}{p}= [];
+                jerk_jerk_pos.treadmill{m}{n}{o}{p}= [];
             end
         end
     end
@@ -23,8 +23,8 @@ for m= 1:12 %Participants
                 if isempty( raw_int.treadmill{m}{n}{o}) ~= 1
                     for p=1:6   % Gravity
                         if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
-                                jerk_pos.treadmill{m}{n}{o}{p}(:,2)=jerk_pos(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
-                                jerk_pos.treadmill{m}{n}{o}{p}(:,1)=raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1);
+                                [jerk_jerk_pos.treadmill{m}{n}{o}{p}(:,2),jerk_jerk_pos.treadmill{m}{n}{o}{p}(:,3)]=jerk_pos(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
+                                jerk_jerk_pos.treadmill{m}{n}{o}{p}(:,1)=raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1);
                         end
                     end
                 end
@@ -39,8 +39,8 @@ for m= 1:12
             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
                 for p=1:6
                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
-                        jerk_pos.treadmill{m}{5}{o}{p}(:,2)=jerk(raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,6));
-                        jerk_pos.treadmill{m}{5}{o}{p}(:,1)=raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1);
+                        [jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,2),jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,3)]=jerk_fp(raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,6));
+                        jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,1)=raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1);
                     end
                 end
             end
@@ -48,35 +48,49 @@ for m= 1:12
     end
 end
 %% Develope mean of the data 
-% Allocate mjerk_pos
-mjerk_pos.treadmill= cell(1,12);
+% Allocate mjerk_jerk_pos
+mjerk_jerk_pos.treadmill= cell(1,12);
 for m= 1:12
-    mjerk_pos.treadmill{m}= cell(1,5);
+    mjerk_jerk_pos.treadmill{m}= cell(1,5);
     for n=1:5
-        mjerk_pos.treadmill{m}{n}= cell(1,3);
+        mjerk_jerk_pos.treadmill{m}{n}= cell(1,3);
         for o=1:3
-            mjerk_pos.treadmill{m}{n}{o}= cell(1,6);
+            mjerk_jerk_pos.treadmill{m}{n}{o}= cell(1,6);
             for p=1:6
-                mjerk_pos.treadmill{m}{n}{o}{p}= [];
+                mjerk_jerk_pos.treadmill{m}{n}{o}{p}= NaN;
             end
         end
     end
 end
-%%
-% Calculate mean of jerk_pos in the gravity direction (in this case 4th
-% colum)
+%% Calculate mean 
+% Calculate mean of jerk_jerk_pos in the gravity direction for smartphones
+% and smartwatches 
 for m= 1:12
-    for n=1:5
-        if isempty(jerk_pos.treadmill{m}{n}) ~= 1
+    for n=1:4%5
+        if isempty(jerk_jerk_pos.treadmill{m}{n}) ~= 1
             for o=1:3
-                if isempty(jerk_pos.treadmill{m}{n}{o}) ~= 1
+                if isempty(jerk_jerk_pos.treadmill{m}{n}{o}) ~= 1
                     for p=1:6
-                        if isempty(jerk_pos.treadmill{m}{n}{o}{p}) ~= 1
-                            data = jerk_pos.treadmill{m}{n}{o}{p}(:,2);
-                            if isempty(data) ~= 1%length(data) > 0
-                                display(mean(data));
-                                mjerk_pos.treadmill{m}{n}{o}{p}= mean(data);
-                            end
+                        if isempty(jerk_jerk_pos.treadmill{m}{n}{o}{p}) ~= 1
+                            mjerk_jerk_pos.treadmill{m}{n}{o}{p}= sum(jerk_jerk_pos.treadmill{m}{n}{o}{p}(:,2))./sum(jerk_jerk_pos.treadmill{m}{n}{o}{p}(:,3));
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+
+% Mean for forceplate data  
+for m= 1:12
+    for n= 5
+        if isempty(jerk_jerk_pos.treadmill{m}{5}) ~= 1
+            for o=1:3
+                if isempty(jerk_jerk_pos.treadmill{m}{5}{o}) ~= 1
+                    for p=1:6
+                        if isempty(jerk_jerk_pos.treadmill{m}{5}{o}{p}) ~= 1
+                                mjerk_jerk_pos.treadmill{m}{5}{o}{p}= sum(jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,2))./sum(jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,3)); % mean for 
                         end
                     end
                 end
@@ -102,9 +116,9 @@ device  = cellstr(['SP1';'SW1';'SP2';'SW2';'FP ']);
         result= NaN(6,12);
         for m=1:11
             for p= 1:6
-                if isempty( mjerk_pos.treadmill{m}{3}{3}{p} ) ~= 1
+                if isempty( mjerk_jerk_pos.treadmill{m}{3}{3}{p} ) ~= 1
                     
-                    result(p,m)= mjerk_pos.treadmill{m}{3}{3}{p};
+                    result(p,m)= mjerk_jerk_pos.treadmill{m}{3}{3}{p};
                 end
             end
         end

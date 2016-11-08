@@ -1,4 +1,4 @@
-function [j_new, positives] = jerk(t,x)
+function [j_new, positives] = jerk_fp(t,x)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,10 +10,10 @@ sps=round(1/mean(t(2:end,1)-t(1:end-1,1)));
 n=length(t);
 j=zeros(n,1);
 positives=zeros(n,1);
-j(2:end,1)=(x(2:end,1)-x(1:end-1,1))./(1/sps);
+j(2:end,1)=((x(2:end,1)-x(1:end-1,1))./(1/sps));
 
-positives(2:end,1) = j(2:end,1) <= 0;
+positives(2:end,1) = j(2:end,1) >= 0;
 
-j_new=sqrt(sum(j.^2,2)) .* positives;
+j_new=j.* positives;
 
  

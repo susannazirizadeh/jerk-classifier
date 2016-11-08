@@ -7,183 +7,46 @@
 % 6.Plot a histogram to visually confirm that the mean of the Pearson residuals is equal to 0
 % 7.Plot the Pearson residuals versus the fitted values
 
-load results_grf
-button= 4; % Switch the button for 1= Smartphone1, 2= Smartwatch1, 3=Smartphone2, 4=Smartwatch2
+% load results_jerkpos
  %% 1.Plot each individual 
-%  device  = {'SP1' 'SW1' 'SP2' 'SW2'};
+  device  = {'SP1' 'SW1' 'SP2' 'SW2'};
 %  for n = 1:length(device)
-%      filename = ['results_grf.treadmill_' device{n}]    
-f1_1=fit(results_grf.treadmill{button}{1}(1:6,1),results_grf.treadmill{button}{1}(1:6,2),'poly1');
-f1_2=fit(results_grf.treadmill{button}{1}(7:12,1),results_grf.treadmill{button}{1}(7:12,2),'poly1');
-f1_3=fit(results_grf.treadmill{button}{1}(13:18,1),results_grf.treadmill{button}{1}(13:18,2),'poly1');
-f2_1=fit(results_grf.treadmill{button}{2}(1:6,1),results_grf.treadmill{button}{2}(1:6,2),'poly1');
-f2_2=fit(results_grf.treadmill{button}{2}(7:12,1),results_grf.treadmill{button}{2}(7:12,2),'poly1');
-f2_3=fit(results_grf.treadmill{button}{2}(13:18,1),results_grf.treadmill{button}{2}(13:18,2),'poly1');
- f3_1=fit(results_grf.treadmill{button}{3}(1:6,1),results_grf.treadmill{button}{3}(1:6,2),'poly1');
-f3_2=fit(results_grf.treadmill{button}{3}(7:12,1),results_grf.treadmill{button}{3}(7:12,2),'poly1');
-f3_3=fit(results_grf.treadmill{button}{3}(13:18,1),results_grf.treadmill{button}{3}(13:18,2),'poly1');
- f4_1=fit(results_grf.treadmill{button}{4}(1:6,1),results_grf.treadmill{button}{4}(1:6,2),'poly1');
-f4_2=fit(results_grf.treadmill{button}{4}(7:12,1),results_grf.treadmill{button}{4}(7:12,2),'poly1');
-f4_3=fit(results_grf.treadmill{button}{4}(13:18,1),results_grf.treadmill{button}{4}(13:18,2),'poly1');
-f5_1=fit(results_grf.treadmill{button}{5}(1:6,1),results_grf.treadmill{button}{5}(1:6,2),'poly1');
-f5_2=fit(results_grf.treadmill{button}{5}(7:12,1),results_grf.treadmill{button}{5}(7:12,2),'poly1');
-f5_3=fit(results_grf.treadmill{button}{5}(13:18,1),results_grf.treadmill{button}{5}(13:18,2),'poly1');
-f6_1=fit(results_grf.treadmill{button}{6}(1:6,1),results_grf.treadmill{button}{6}(1:6,2),'poly1');
-f6_2=fit(results_grf.treadmill{button}{6}(7:12,1),results_grf.treadmill{button}{6}(7:12,2),'poly1');
-f6_3=fit(results_grf.treadmill{button}{6}(13:18,1),results_grf.treadmill{button}{6}(13:18,2),'poly1');
-f7_1=fit(results_grf.treadmill{button}{7}(1:6,1),results_grf.treadmill{button}{7}(1:6,2),'poly1');
-f7_2=fit(results_grf.treadmill{button}{7}(7:12,1),results_grf.treadmill{button}{7}(7:12,2),'poly1');
-f7_3=fit(results_grf.treadmill{button}{7}(13:18,1),results_grf.treadmill{button}{7}(13:18,2),'poly1');
-f8_1=fit(results_grf.treadmill{button}{8}(1:6,1),results_grf.treadmill{button}{8}(1:6,2),'poly1');
-f8_2=fit(results_grf.treadmill{button}{8}(7:12,1),results_grf.treadmill{button}{8}(7:12,2),'poly1');
-f8_3=fit(results_grf.treadmill{button}{8}(13:18,1),results_grf.treadmill{button}{8}(13:18,2),'poly1');
-  f9_1=fit(results_grf.treadmill{button}{9}(1:6,1),results_grf.treadmill{button}{9}(1:6,2),'poly1');
-f9_2=fit(results_grf.treadmill{button}{9}(7:12,1),results_grf.treadmill{button}{9}(7:12,2),'poly1');
-f9_3=fit(results_grf.treadmill{button}{9}(13:18,1),results_grf.treadmill{button}{9}(13:18,2),'poly1');
-f10_1=fit(results_grf.treadmill{button}{10}(1:6,1),results_grf.treadmill{button}{10}(1:6,2),'poly1');
-f10_2=fit(results_grf.treadmill{button}{10}(7:12,1),results_grf.treadmill{button}{10}(7:12,2),'poly1');
-f10_3=fit(results_grf.treadmill{button}{10}(13:18,1),results_grf.treadmill{button}{10}(13:18,2),'poly1');
-f11_1=fit(results_grf.treadmill{button}{11}(1:6,1),results_grf.treadmill{button}{10}(1:6,2),'poly1');
-% f11_2=fit(results_grf.treadmill{button}{11}(7:12,1),results_grf.treadmill{button}{11}(7:12,2),'poly1');
-f11_3=fit(results_grf.treadmill{button}{11}(13:18,1),results_grf.treadmill{button}{1}(13:18,2),'poly1');
-f12_1=fit(results_grf.treadmill{button}{12}(1:6,1),results_grf.treadmill{button}{12}(1:6,2),'poly1');
-% f12_2=fit(results_grf.treadmill{button}{12}(7:12,1),results_grf.treadmill{button}{12}(7:12,2),'poly1');
-% f12_3=fit(results_grf.treadmill{button}{12}(13:18,1),results_grf.treadmill{button}{12}(13:18,2),'poly1');
- 
- figure
-subplot(3,4,1)
-text(.75,1.25,'Smartphone jerk and ground reaction force')
-plot(results_grf.treadmill{button}{1}(1:6,1),results_grf.treadmill{button}{1}(1:6,2),'*',results_grf.treadmill{button}{1}(7:12,1),results_grf.treadmill{button}{1}(7:12,2),'o',results_grf.treadmill{button}{1}(13:18,1),results_grf.treadmill{button}{1}(13:18,2),'p')
-hold on 
-plot(f1_1,'-');
-plot(f1_2,'-');
-plot(f1_3,'-');
-title('Participants 1');
-xlabel('Forceplate Data [N]');
-ylabel('Jerk Data from smartphone [m/s^3]');
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,2)
-plot(results_grf.treadmill{button}{2}(1:6,1),results_grf.treadmill{button}{2}(1:6,2),'*',results_grf.treadmill{button}{2}(7:12,1),results_grf.treadmill{button}{2}(7:12,2),'o',results_grf.treadmill{button}{2}(13:18,1),results_grf.treadmill{button}{2}(13:18,2),'p')
-hold on 
-plot(f2_1,'-');
-plot(f2_2,'-');
-plot(f2_3,'-');
-title('Participants 2')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,3)
-plot(results_grf.treadmill{button}{3}(1:6,1),results_grf.treadmill{button}{3}(1:6,2),'*',results_grf.treadmill{button}{3}(7:12,1),results_grf.treadmill{button}{3}(7:12,2),'o',results_grf.treadmill{button}{3}(13:18,1),results_grf.treadmill{button}{3}(13:18,2),'p')
-hold on 
-plot(f3_1,'-');
-plot(f3_2,'-');
-plot(f3_3,'-');
-title('Participants 3')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,4)
-plot(results_grf.treadmill{button}{4}(1:6,1),results_grf.treadmill{button}{4}(1:6,2),'*',results_grf.treadmill{button}{4}(7:12,1),results_grf.treadmill{button}{4}(7:12,2),'o',results_grf.treadmill{button}{4}(13:18,1),results_grf.treadmill{button}{4}(13:18,2),'p')
-hold on 
-plot(f4_1,'-');
-plot(f4_2,'-');
-plot(f4_3,'-');
-title('Participants 4')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,5)
-plot(results_grf.treadmill{button}{5}(1:6,1),results_grf.treadmill{button}{5}(1:6,2),'*',results_grf.treadmill{button}{5}(7:12,1),results_grf.treadmill{button}{5}(7:12,2),'o',results_grf.treadmill{button}{5}(13:18,1),results_grf.treadmill{button}{5}(13:18,2),'p')
-hold on 
-plot(f5_1,'-');
-plot(f5_2,'-');
-plot(f5_3,'-');
-title('Participants 5')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,6)
-plot(results_grf.treadmill{button}{6}(1:6,1),results_grf.treadmill{button}{6}(1:6,2),'*',results_grf.treadmill{button}{6}(7:12,1),results_grf.treadmill{button}{6}(7:12,2),'o',results_grf.treadmill{button}{6}(13:18,1),results_grf.treadmill{button}{6}(13:18,2),'p')
-hold on 
-plot(f6_1,'-');
-plot(f6_2,'-');
-plot(f6_3,'-');
-title('Participants 6')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-
-subplot(3,4,7)
-plot(results_grf.treadmill{button}{7}(1:6,1),results_grf.treadmill{button}{7}(1:6,2),'*',results_grf.treadmill{button}{7}(7:12,1),results_grf.treadmill{button}{7}(7:12,2),'o',results_grf.treadmill{button}{7}(13:18,1),results_grf.treadmill{button}{7}(13:18,2),'p')
-hold on 
-plot(f7_1,'-');
-plot(f7_2,'-');
-plot(f7_3,'-');
-title('Participants 7')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,8)
-plot(results_grf.treadmill{button}{8}(1:6,1),results_grf.treadmill{button}{8}(1:6,2),'*',results_grf.treadmill{button}{8}(7:12,1),results_grf.treadmill{button}{8}(7:12,2),'o',results_grf.treadmill{button}{8}(13:18,1),results_grf.treadmill{button}{8}(13:18,2),'p')
-hold on 
-plot(f8_1,'-');
-plot(f8_2,'-');
-plot(f8_3,'-');
-title('Participants 8')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,9)
-plot(results_grf.treadmill{button}{9}(1:6,1),results_grf.treadmill{button}{9}(1:6,2),'*',results_grf.treadmill{button}{9}(7:12,1),results_grf.treadmill{button}{9}(7:12,2),'o',results_grf.treadmill{button}{9}(13:18,1),results_grf.treadmill{button}{9}(13:18,2),'p')
-hold on 
-plot(f9_1,'-');
-plot(f9_2,'-');
-plot(f9_3,'-');
-title('Participants 9')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,10)
-plot(results_grf.treadmill{button}{10}(1:6,1),results_grf.treadmill{button}{10}(1:6,2),'*',results_grf.treadmill{button}{10}(7:12,1),results_grf.treadmill{button}{10}(7:12,2),'o',results_grf.treadmill{button}{10}(13:18,1),results_grf.treadmill{button}{10}(13:18,2),'p')
-hold on 
-plot(f10_1,'-');
-plot(f10_2,'-');
-plot(f10_3,'-');
-title('Participants 10')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,11)
-plot(results_grf.treadmill{button}{11}(1:6,1),results_grf.treadmill{button}{11}(1:6,2),'*',results_grf.treadmill{button}{11}(7:12,1),results_grf.treadmill{button}{11}(7:12,2),'o',results_grf.treadmill{button}{11}(13:18,1),results_grf.treadmill{button}{11}(13:18,2),'p')
-hold on 
-plot(f11_1,'-');
-% plot(f11_2,'-');
-plot(f11_3,'-');
-title('Participants 11')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
-
-subplot(3,4,12)
-plot(results_grf.treadmill{button}{12}(1:6,1),results_grf.treadmill{button}{12}(1:6,2),'*',results_grf.treadmill{button}{12}(7:12,1),results_grf.treadmill{button}{12}(7:12,2),'o',results_grf.treadmill{button}{12}(13:18,1),results_grf.treadmill{button}{12}(13:18,2),'p')
-hold on 
-plot(f12_1,'-');
-% plot(f12_2,'-');
-% plot(f12_3,'-');
-title('Participants 12')
-xlabel('Forceplate Data [N]')
-ylabel('Jerk Data from smartphone [m/s^3]')
-legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
+%      filename = ['results_jerkpos.treadmill_' device{n}]  
+for button= 1:4
+    figure;
+    for m= 1:12
+        x1=results_jerkpos.treadmill{button}{m}(1:6,1) ;y1=results_jerkpos.treadmill{button}{m}(1:6,2); idx = isfinite(x1) & isfinite(y1);
+        try
+            f1=fit(x1(idx),y1(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        x2=results_jerkpos.treadmill{button}{m}(7:12,1) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
+        try
+            f2=fit(x2(idx),y2(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        x3=results_jerkpos.treadmill{button}{m}(13:18,1) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
+        try
+            f3=fit(x2(idx),y2(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        
+        subplot(3,4,m)
+        text(.75,1.25,'Smartphone jerk and ground reaction force jerk')
+        plot(x1,y1,'*',x2,y2,'o',x3,y3,'p')
+        hold on
+        plot(f1,'-');
+        plot(f2,'-');
+        plot(f3,'-');
+        title(['Participants ', num2str(m), device{n}] );
+        xlabel('Forceplate Data [N]');
+        ylabel('Jerk Data from smartphone [m/s^3]');
+        legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
+    end
+end
 
 filename= ('jerk_SP1_FP_each_SW2.pdf');
 print(filename,'-dpdf')
@@ -191,7 +54,7 @@ print(filename,'-dpdf')
 %%  
 % 1.Plot Forceplate data versus the jerk estimate
 
-C=([results_grf.treadmill{button}{1}(:,:);results_grf.treadmill{button}{2}(:,:);results_grf.treadmill{button}{3}(:,:);results_grf.treadmill{button}{4}(:,:);results_grf.treadmill{button}{5}(:,:);results_grf.treadmill{button}{6}(:,:);results_grf.treadmill{button}{7}(:,:);results_grf.treadmill{button}{8}(:,:);results_grf.treadmill{button}{9}(:,:);results_grf.treadmill{button}{10}(:,:);results_grf.treadmill{button}{11}(:,:);results_grf.treadmill{button}{12}(:,:)]);
+C=([results_jerkpos.treadmill{button}{1}(:,:);results_jerkpos.treadmill{button}{2}(:,:);results_jerkpos.treadmill{button}{3}(:,:);results_jerkpos.treadmill{button}{4}(:,:);results_jerkpos.treadmill{button}{5}(:,:);results_jerkpos.treadmill{button}{6}(:,:);results_jerkpos.treadmill{button}{7}(:,:);results_jerkpos.treadmill{button}{8}(:,:);results_jerkpos.treadmill{button}{9}(:,:);results_jerkpos.treadmill{button}{10}(:,:);results_jerkpos.treadmill{button}{11}(:,:);results_jerkpos.treadmill{button}{12}(:,:)]);
 figure;
 plot(C(:,2),C(:,1),'ro')
 xlabel('Estimated Jerk from smartphone [m/s^3]')

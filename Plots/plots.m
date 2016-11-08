@@ -1,6 +1,6 @@
 
 %% Per weight
- load mjerk_jerk
+%  load mjerk_jerk_pos
 weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 69.7]; %Weights of each participants
 BWper=[ 0.2 0.5 0.7 0.8 0.9 1.0]; % Bodyweight percentages that they were running at
 for i=1:6
@@ -17,9 +17,9 @@ for n= 1:4%length(device)
         figure;
         for m= 2:12
             for p= 1:6
-                if isempty( mjerk_jerk.treadmill{m}{n}{o}{p} ) ~= 1
+                if isempty( mjerk_jerk_pos.treadmill{m}{n}{o}{p} ) ~= 1
                     
-                    result(p,m)= mjerk_jerk.treadmill{m}{n}{o}{p};
+                    result(p,m)= mjerk_jerk_pos.treadmill{m}{n}{o}{p};
                 end
             end
             plot (BWperweight(1:6,1:6),result(1:6,1:6),'*-',BWperweight(1:6,7:12),result(1:6,7:12),'o-')
@@ -30,7 +30,7 @@ for n= 1:4%length(device)
             grid on
              hold on 
             %    axis([10 100  0 300000])
-            filename= (['jerk_jerk_' num2str(speed(o)) 'km_' device{n} '.pdf']);
+            filename= (['jerk_jerk_pos_' num2str(speed(o)) 'km_' device{n} '.pdf']);
             print(filename,'-dpdf')
         end
     end
