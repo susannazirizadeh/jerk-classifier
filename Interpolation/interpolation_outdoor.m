@@ -4,8 +4,8 @@
 % o= speed          (5)
 % p= condition      (7) (asphalt,grass,soil,inlcineup, inclinedown, stairsup, stairs down) 
 
-clear all
-load raw_data
+% clear all
+% load raw_data
 
 % mean(j(find(j>0)))
 %% Allocat raw_zero,raw_nans and raw_int for outdoor session
@@ -37,36 +37,38 @@ for m= 1:12
     end
 end 
 
-raw_int.outdoor= cell(1,12);
-for m= 1:12
-    raw_int.outdoor{m}= cell(1,3);
-    for n=1:3
-        raw_int.outdoor{m}{n}= cell(1,5);
-        for o=1:5
-            raw_int.outdoor{m}{n}{o}= cell(1,7);
-            for p=1:7
-                raw_int.outdoor{m}{n}{o}{p}= [];
-            end
-        end
-    end
-end 
+% raw_int.outdoor= cell(1,12);
+% for m= 1:12
+%     raw_int.outdoor{m}= cell(1,3);
+%     for n=1:3
+%         raw_int.outdoor{m}{n}= cell(1,5);
+%         for o=1:5
+%             raw_int.outdoor{m}{n}{o}= cell(1,7);
+%             for p=1:7
+%                 raw_int.outdoor{m}{n}{o}{p}= [];
+%             end
+%         end
+%     end
+% end 
 
 
-for m= 1:12
-    if isempty(raw_data.outdoor{m}) ~= 1
-        if isempty(raw_data.outdoor{m}{3}) ~= 1
-            for o=1:5
-                if isempty(raw_data.outdoor{m}{3}{o}) ~= 1
-                    for p=1:7
-                        if isempty(raw_data.outdoor{m}{3}{o}{p}) ~= 1
-                            raw_data.outdoor{m}{3}{o}{p}(:,4)= NaN;
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
+% for m= 1:12
+%     if isempty(raw_data.outdoor{m}) ~= 1
+%         for n= 1:3
+%             if isempty(raw_data.outdoor{m}{n}) ~= 1
+%                 for o=1:5
+%                     if isempty(raw_data.outdoor{m}{n}{o}) ~= 1
+%                         for p=1:7
+%                             if isempty(raw_data.outdoor{m}{n}{o}{p}) ~= 1
+% %                                 raw_data.outdoor{m}{n}{o}{p}(:,4)= NaN;
+%                             end
+%                         end
+%                     end
+%                 end
+%             end
+%         end
+%     end
+% end
 
 %% Exclude repeted values
 for m= 1:12 %participants
