@@ -126,20 +126,22 @@ for m= 1:12 %participants
         end
     end
 end
-%% Correct forceplate data 
-% 
-% for m= 1:12 
-%     if isempty(raw_data.outdoor{m}{5}) ~= 1
-%         for o=1:3
-%             if isempty(raw_data.outdoor{m}{5}{o}) ~= 1
-%                 for p=1:6
-%                     if isempty(raw_data.outdoor{m}{5}{o}{p}) ~= 1
-%                         raw_int.outdoor{m}{5}{o}{p}(:,2:5)=raw_data.outdoor{m}{5}{o}{p}(:,2:5);
-%                     end
-%                 end
-%             end
-%             
-%         end
-%     end
-% end
-
+%% Include GPS data 
+for m= 1:12 %participants
+    if isempty(raw_data.outdoor{m}) ~= 1
+        for n=3 %devices
+            if isempty(raw_data.outdoor{m}{n}) ~= 1
+                for o=1:5 %speed
+                    if isempty( raw_data.outdoor{m}{n}{o}) ~= 1
+                        for p=1:7
+                            if isempty( raw_data.outdoor{m}{n}{o}{p}) ~= 1
+                                raw_int.outdoor{m}{n}{o}{p}(:,1:3)=raw_data.outdoor{m}{n}{o}{p}(:,1:3);
+                            end
+                        end
+                    end
+                end
+                
+            end
+        end
+    end
+end 

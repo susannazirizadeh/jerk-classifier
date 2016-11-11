@@ -4,7 +4,7 @@
 % n= device         (3)
 % o= speed          (5)
 % p= condition      (7) (asphalt,grass,soil,inlcineup, inclinedown, stairsup, stairs down)
-load results_grf
+load results_jerkpos
 partic= cellstr(['P1 ';'P2 ';'P3 ';'P4 ';'P5 ';'P6 ';'P7 ';'P8 ';'P9 ';'P10';'P11';'P12']);
 device  = cellstr(['SP1';'SW1';'GPS']);
 speed = cellstr(['5km/h ';'8km/h ';'12km/h';'slow  ';'fast  ']);
@@ -17,7 +17,7 @@ for n=1%:2%length(device)
         figure;
         subplot(2,3,1)
         for m=1:length(partic)
-            plot(results_grf.outdoor{n}{m}(1:5,3),results_grf.outdoor{n}{m}(1:5,1),'o')
+            plot(results_jerkpos.outdoor{n}{m}(1:5,3),results_jerkpos.outdoor{n}{m}(1:5,1),'o')
             title(['Calculated load during outdoor session, ' device{n} ' 5km/h '])
             xlabel('Different ground typs')
             ylabel('Jerk [m/s^3]')
@@ -28,7 +28,7 @@ for n=1%:2%length(device)
         
         subplot(2,3,2)
         for m=1:length(partic)
-            plot(results_grf.outdoor{n}{m}(6:10,3),results_grf.outdoor{n}{m}(6:10,1),'o')
+            plot(results_jerkpos.outdoor{n}{m}(6:10,3),results_jerkpos.outdoor{n}{m}(6:10,1),'o')
             title(['Calculated load during outdoor session, ' device{n} ' 8km/h '])
             xlabel('Different ground typs')
             ylabel('Jerk [m/s^3]')
@@ -39,7 +39,7 @@ for n=1%:2%length(device)
         
         subplot(2,3,3)
         for m=1:length(partic)
-            plot(results_grf.outdoor{n}{m}(11:15,3),results_grf.outdoor{n}{m}(11:15,1),'o')
+            plot(results_jerkpos.outdoor{n}{m}(11:15,3),results_jerkpos.outdoor{n}{m}(11:15,1),'o')
             title(['Calculated load during outdoor session, ' device{n} ' 12km/h '])
             xlabel('Different ground typs')
             ylabel('Jerk [m/s^3]')
@@ -49,7 +49,7 @@ for n=1%:2%length(device)
         end
                 subplot(2,3,4)
         for m=1:length(partic)
-            plot(results_grf.outdoor{n}{m}(16:17,3),results_grf.outdoor{n}{m}(16:17,1),'o')
+            plot(results_jerkpos.outdoor{n}{m}(16:17,3),results_jerkpos.outdoor{n}{m}(16:17,1),'o')
             title(['Calculated load during outdoor session, ' device{n} ' slow '])
             xlabel('Different ground typs')
             ylabel('Jerk [m/s^3]')
@@ -59,7 +59,7 @@ for n=1%:2%length(device)
         end
                 subplot(2,3,5)
         for m=1:length(partic)
-            plot(results_grf.outdoor{n}{m}(18:19,3),results_grf.outdoor{n}{m}(18:19,1),'o')
+            plot(results_jerkpos.outdoor{n}{m}(18:19,3),results_jerkpos.outdoor{n}{m}(18:19,1),'o')
             title(['Calculated load during outdoor session, ' device{n} ' fast '])
             xlabel('Different ground typs')
             ylabel('Jerk [m/s^3]')

@@ -101,6 +101,7 @@ for m= 1:length(partic)
 end
 
 %% Calculate mean of jerk_jerk_pos
+% For smartwatch and smartphone
 for m= 1:length(partic)
     if isempty(jerk_jerk_pos.outdoor{m}) ~= 1
         for n=1:2 %length(speed)
@@ -110,6 +111,25 @@ for m= 1:length(partic)
                         for p=1:length(con)
                             if isempty(jerk_jerk_pos.outdoor{m}{n}{o}{p}) ~= 1
                             mjerk_jerk_pos.outdoor{m}{n}{o}{p}= sum(jerk_jerk_pos.outdoor{m}{n}{o}{p}(:,2))./sum(jerk_jerk_pos.outdoor{m}{n}{o}{p}(:,3));
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+% For GPS
+for m= 1:length(partic)
+    if isempty(jerk_jerk_pos.outdoor{m}) ~= 1
+        for n=3 %length(speed)
+            if isempty(jerk_jerk_pos.outdoor{m}{n}) ~= 1
+                for o=1:length(speed)
+                    if isempty(jerk_jerk_pos.outdoor{m}{n}{o}) ~= 1
+                        for p=1:length(con)
+                            if isempty(jerk_jerk_pos.outdoor{m}{n}{o}{p}) ~= 1
+                            mjerk_jerk_pos.outdoor{m}{n}{o}{p}= (nanmean(jerk_jerk_pos.outdoor{m}{n}{o}{p}(:,3)))*3.6;
                             end
                         end
                     end
@@ -144,6 +164,7 @@ for n=1:2%length(device)
                             results_jerkpos.outdoor{n}{m}(:,3)= ([1;2;3;4;5;1;2;3;4;5;1;2;3;4;5;6;7;6;7]);
                             results_jerkpos.outdoor{n}{m}(:,4)=([weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m),weight(m)]);
                             results_jerkpos.outdoor{n}{m}(:,5)=([m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m]);
+                            results_jerkpos.outdoor{n}{m}(:,6)=cell2mat([mjerk_jerk_pos.outdoor{m}{3}{1}(1:5)';mjerk_jerk_pos.outdoor{m}{3}{2}(1:5)';mjerk_jerk_pos.outdoor{m}{3}{3}(1:5)';mjerk_jerk_pos.outdoor{m}{3}{4}(6:7)';mjerk_jerk_pos.outdoor{m}{3}{5}(6:7)']);
                         end
                     end
                 end

@@ -1,5 +1,5 @@
 %% Transfroming electrical Force plate data into mechanical force [N]
-load raw_int
+% load raw_int
 
 %%
 weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 69.7]; %Weights of each participants
@@ -25,7 +25,7 @@ for m= 3:12
 end
 
 
-for m= 1%:12
+for m= 1%2
     if isempty(raw_int.treadmill{m}{5}) ~= 1
         for o=1:3
             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
