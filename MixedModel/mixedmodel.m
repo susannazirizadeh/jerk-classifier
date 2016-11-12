@@ -7,7 +7,7 @@
 % 6.Plot a histogram to visually confirm that the mean of the Pearson residuals is equal to 0
 % 7.Plot the Pearson residuals versus the fitted values
 
-% load results_jerkpos
+load results_jerkpos
  %% 1.Plot each individual 
   device  = {'SP1' 'SW1' 'SP2' 'SW2'};
 %  for n = 1:length(device)
@@ -15,7 +15,9 @@
 for button= 1:4
     figure;
     for m= 1:12
-        x1=results_jerkpos.treadmill{button}{m}(1:6,1) ;y1=results_jerkpos.treadmill{button}{m}(1:6,2); idx = isfinite(x1) & isfinite(y1);
+        x1=results_jerkpos.treadmill{button}{m}(1:6,1);
+        y1=results_jerkpos.treadmill{button}{m}(1:6,2); 
+        idx = isfinite(x1) & isfinite(y1);
         try
             f1=fit(x1(idx),y1(idx),'poly1');
         catch

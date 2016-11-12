@@ -64,7 +64,7 @@ for m= 1:12
                     for p=1:6
                         if isempty( raw_data.treadmill{m}{n}{o}{p}) ~= 1
                             j=1;k=1;
-                            for i=2:length(raw_data.treadmill{m}{n}{o}{p}(:,2))
+                            for i=2:length(raw_data.treadmill{m}{n}{o}{p}(,2))
                                 if raw_data.treadmill{m}{n}{o}{p}(i,2)~=raw_data.treadmill{m}{n}{o}{p}(i-1,2) % creating two vectors for interpolation
                                     raw_zero.treadmill{m}{n}{o}{p}(j,:)= raw_data.treadmill{m}{n}{o}{p}(i,:); % raw_zero has all the data points included which are not repeted
                                     j=j+1;
@@ -87,7 +87,7 @@ for m= 1:12
                             j=1;
                             for i=2:length(raw_data.treadmill{m}{n}{o}{p}(:,2))
                                 if raw_data.treadmill{m}{n}{o}{p}(i,2)~=raw_data.treadmill{m}{n}{o}{p}(i-1,2)
-                                    raw_int.treadmill{m}{n}{o}{p}(i,:)= raw_data.treadmill{m}{n}{o}{p}(i,:);
+                                    raw_int.treadmill{m}{n}{o}{p}(i,2:4)= raw_data.treadmill{m}{n}{o}{p}(i,2:4);
                                 else
                                     raw_int.treadmill{m}{n}{o}{p}(i,1)= raw_data.treadmill{m}{n}{o}{p}(i,1);
                                     raw_int.treadmill{m}{n}{o}{p}(i,2)= vq1(j);
@@ -104,7 +104,9 @@ for m= 1:12
                             if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
                                 xqnew=zeros(length(raw_int.treadmill{m}{n}{o}{p}(:,2)),1);
                                 for i=1:length(raw_int.treadmill{m}{n}{o}{p}(:,2))-1
-                                    xqnew(i,1)=(raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))./2;
+                                    xqnew(i,1)=(raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2;
+                                xqnew(i+1,1)=((raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2) + (raw_int.treadmill{m}{n}{o}{p}(i + 1,1)-raw_int.treadmill{m}{n}{o}{p}(i,1)) ;
+                                
                                 end
                                 xnew= raw_int.treadmill{m}{n}{o}{p}(:,1);
                                 v1new= raw_int.treadmill{m}{n}{o}{p}(:,2);
