@@ -64,7 +64,7 @@ for m= 1:12
                     for p=1:6
                         if isempty( raw_data.treadmill{m}{n}{o}{p}) ~= 1
                             j=1;k=1;
-                            for i=2:length(raw_data.treadmill{m}{n}{o}{p}(,2))
+                            for i=2:length(raw_data.treadmill{m}{n}{o}{p}(:,2))
                                 if raw_data.treadmill{m}{n}{o}{p}(i,2)~=raw_data.treadmill{m}{n}{o}{p}(i-1,2) % creating two vectors for interpolation
                                     raw_zero.treadmill{m}{n}{o}{p}(j,:)= raw_data.treadmill{m}{n}{o}{p}(i,:); % raw_zero has all the data points included which are not repeted
                                     j=j+1;
@@ -74,22 +74,21 @@ for m= 1:12
                                 end
                             end
                             clear xq; clear x; clear v1; clear v2 ;clear v3 ; clear v1q; clear v2q; clear v3q;
-%                             if isempty( raw_nans.treadmill{m}{n}{o}{p}) ~= 1
-                                x= raw_zero.treadmill{m}{n}{o}{p}(:,1); %Linear Interpolation
-                                v1= raw_zero.treadmill{m}{n}{o}{p}(:,2);
-                                v2= raw_zero.treadmill{m}{n}{o}{p}(:,3);
-                                v3= raw_zero.treadmill{m}{n}{o}{p}(:,4);
-                                xq= raw_nans.treadmill{m}{n}{o}{p}(:,1);
-                                vq1 = interp1(x,v1,xq);
-                                vq2 = interp1(x,v2,xq);
-                                vq3 = interp1(x,v3,xq);
-%                             end
+                            %                             if isempty( raw_nans.treadmill{m}{n}{o}{p}) ~= 1
+                            x= raw_zero.treadmill{m}{n}{o}{p}(:,1); %Linear Interpolation
+                            v1= raw_zero.treadmill{m}{n}{o}{p}(:,2);
+                            v2= raw_zero.treadmill{m}{n}{o}{p}(:,3);
+                            v3= raw_zero.treadmill{m}{n}{o}{p}(:,4);
+                            xq= raw_nans.treadmill{m}{n}{o}{p}(:,1);
+                            vq1 = interp1(x,v1,xq);
+                            vq2 = interp1(x,v2,xq);
+                            vq3 = interp1(x,v3,xq);
+                            %                             end
                             j=1;
                             for i=2:length(raw_data.treadmill{m}{n}{o}{p}(:,2))
                                 if raw_data.treadmill{m}{n}{o}{p}(i,2)~=raw_data.treadmill{m}{n}{o}{p}(i-1,2)
-                                    raw_int.treadmill{m}{n}{o}{p}(i,2:4)= raw_data.treadmill{m}{n}{o}{p}(i,2:4);
-                                else
-                                    raw_int.treadmill{m}{n}{o}{p}(i,1)= raw_data.treadmill{m}{n}{o}{p}(i,1);
+                                    raw_int.treadmill{m}{n}{o}{p}(i,2:4)= raw_data.treadmill{m}{n}{o}{p}(i,2:4);   
+                                else  
                                     raw_int.treadmill{m}{n}{o}{p}(i,2)= vq1(j);
                                     raw_int.treadmill{m}{n}{o}{p}(i,3)= vq2(j);
                                     raw_int.treadmill{m}{n}{o}{p}(i,4)= vq3(j);
@@ -97,16 +96,15 @@ for m= 1:12
                                 end
                             end
                             clear xqnew; clear xnew; clear v1new; clear v2new;clear  v3new ; clear v1qnew; clear v2qnew; clear v3qnew;
-                            
-                            raw_int.treadmill{m}{n}{o}{p}(1,1)= raw_data.treadmill{m}{n}{o}{p}(1,1);% first point is missing and this changes sampling frequency mean
+                            raw_int.treadmill{m}{n}{o}{p}(:,1)= raw_data.treadmill{m}{n}{o}{p}(:,1);
                             % Interpolating to get same sampling frequenzy
-                            % like force plate data 
+                            % like force plate data
                             if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
-                                xqnew=zeros(length(raw_int.treadmill{m}{n}{o}{p}(:,2)),1);
+                                xqnew=zeros(length(raw_int.treadmill{m}{n}{o}{p}(:,2)-2),1);
                                 for i=1:length(raw_int.treadmill{m}{n}{o}{p}(:,2))-1
                                     xqnew(i,1)=(raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2;
-                                xqnew(i+1,1)=((raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2) + (raw_int.treadmill{m}{n}{o}{p}(i + 1,1)-raw_int.treadmill{m}{n}{o}{p}(i,1)) ;
-                                
+                                    %                                 xqnew(i+1,1)=((raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2) + (raw_int.treadmill{m}{n}{o}{p}(i + 1,1)-raw_int.treadmill{m}{n}{o}{p}(i,1)) ;
+                                    
                                 end
                                 xnew= raw_int.treadmill{m}{n}{o}{p}(:,1);
                                 v1new= raw_int.treadmill{m}{n}{o}{p}(:,2);
