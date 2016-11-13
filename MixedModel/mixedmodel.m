@@ -15,21 +15,19 @@ load results_jerkpos
 for button= 1:4
     figure;
     for m= 1:12
-        x1=results_jerkpos.treadmill{button}{m}(1:6,1);
-        y1=results_jerkpos.treadmill{button}{m}(1:6,2); 
-        idx = isfinite(x1) & isfinite(y1);
+        x1=log(results_jerkpos.treadmill{button}{m}(1:6,1)); y1=results_jerkpos.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
         try
             f1=fit(x1(idx),y1(idx),'poly1');
         catch
             display(['fitting error for participant ' , num2str(m)])
         end
-        x2=results_jerkpos.treadmill{button}{m}(7:12,1) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
+        x2=log(results_jerkpos.treadmill{button}{m}(7:12,1)) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
         try
             f2=fit(x2(idx),y2(idx),'poly1');
         catch
             display(['fitting error for participant ' , num2str(m)])
         end
-        x3=results_jerkpos.treadmill{button}{m}(13:18,1) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
+        x3=log(results_jerkpos.treadmill{button}{m}(13:18,1)) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
         try
             f3=fit(x3(idx),y3(idx),'poly1');
         catch
@@ -57,6 +55,7 @@ end
 % 1.Plot Forceplate data versus the jerk estimate
 button=2;
 C=([results_jerkpos.treadmill{button}{1}(:,:);results_jerkpos.treadmill{button}{2}(:,:);results_jerkpos.treadmill{button}{3}(:,:);results_jerkpos.treadmill{button}{4}(:,:);results_jerkpos.treadmill{button}{5}(:,:);results_jerkpos.treadmill{button}{6}(:,:);results_jerkpos.treadmill{button}{7}(:,:);results_jerkpos.treadmill{button}{8}(:,:);results_jerkpos.treadmill{button}{9}(:,:);results_jerkpos.treadmill{button}{10}(:,:);results_jerkpos.treadmill{button}{11}(:,:);results_jerkpos.treadmill{button}{12}(:,:)]);
+C(:,1)=log(C(:,1));
 figure;
 plot(C(:,2),C(:,1),'ro')
 xlabel('Jerk smartphone [m/s^3]')

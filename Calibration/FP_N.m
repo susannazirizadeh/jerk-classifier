@@ -25,7 +25,7 @@ for m= 3:12
 end
 
 
-for m= 1%2
+for m= 1
     if isempty(raw_int.treadmill{m}{5}) ~= 1
         for o=1:3
             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1

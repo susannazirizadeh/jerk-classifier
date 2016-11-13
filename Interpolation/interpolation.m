@@ -6,8 +6,7 @@
 
 clear all
 load raw_data
-load mjerk_grav
-load jerk_grav
+load raw_int
 
 % mean(j(find(j>0)))
 
@@ -74,7 +73,7 @@ for m= 1:12
                                 end
                             end
                             clear xq; clear x; clear v1; clear v2 ;clear v3 ; clear v1q; clear v2q; clear v3q;
-                            %                             if isempty( raw_nans.treadmill{m}{n}{o}{p}) ~= 1
+                             if isempty( raw_nans.treadmill{m}{n}{o}{p}) ~= 1
                             x= raw_zero.treadmill{m}{n}{o}{p}(:,1); %Linear Interpolation
                             v1= raw_zero.treadmill{m}{n}{o}{p}(:,2);
                             v2= raw_zero.treadmill{m}{n}{o}{p}(:,3);
@@ -83,7 +82,7 @@ for m= 1:12
                             vq1 = interp1(x,v1,xq);
                             vq2 = interp1(x,v2,xq);
                             vq3 = interp1(x,v3,xq);
-                            %                             end
+                                                        end
                             j=1;
                             for i=2:length(raw_data.treadmill{m}{n}{o}{p}(:,2))
                                 if raw_data.treadmill{m}{n}{o}{p}(i,2)~=raw_data.treadmill{m}{n}{o}{p}(i-1,2)
@@ -95,25 +94,25 @@ for m= 1:12
                                     j=j+1;
                                 end
                             end
-                            clear xqnew; clear xnew; clear v1new; clear v2new;clear  v3new ; clear v1qnew; clear v2qnew; clear v3qnew;
                             raw_int.treadmill{m}{n}{o}{p}(:,1)= raw_data.treadmill{m}{n}{o}{p}(:,1);
-                            % Interpolating to get same sampling frequenzy
-                            % like force plate data
-                            if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
-                                xqnew=zeros(length(raw_int.treadmill{m}{n}{o}{p}(:,2)-2),1);
-                                for i=1:length(raw_int.treadmill{m}{n}{o}{p}(:,2))-1
-                                    xqnew(i,1)=(raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2;
-                                    %                                 xqnew(i+1,1)=((raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2) + (raw_int.treadmill{m}{n}{o}{p}(i + 1,1)-raw_int.treadmill{m}{n}{o}{p}(i,1)) ;
-                                    
-                                end
-                                xnew= raw_int.treadmill{m}{n}{o}{p}(:,1);
-                                v1new= raw_int.treadmill{m}{n}{o}{p}(:,2);
-                                v2new= raw_int.treadmill{m}{n}{o}{p}(:,3);
-                                v3new= raw_int.treadmill{m}{n}{o}{p}(:,4);
-                                vq1new = interp1(xnew,v1new,xqnew);
-                                vq2new = interp1(xnew,v2new,xqnew);
-                                vq3new = interp1(xnew,v3new,xqnew);
-                            end
+%                             clear xqnew; clear xnew; clear v1new; clear v2new;clear  v3new ; clear v1qnew; clear v2qnew; clear v3qnew
+%                             % Interpolating to get same sampling frequenzy
+%                             % like force plate data
+%                             if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
+%                                 xqnew=zeros(length(raw_int.treadmill{m}{n}{o}{p}(:,2)-2),1);
+%                                 for i=1:length(raw_int.treadmill{m}{n}{o}{p}(:,2))-1
+%                                     xqnew(i,1)=(raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2;
+%                                     %                                 xqnew(i+1,1)=((raw_int.treadmill{m}{n}{o}{p}(i,1)+raw_int.treadmill{m}{n}{o}{p}(i+1,1))/2) + (raw_int.treadmill{m}{n}{o}{p}(i + 1,1)-raw_int.treadmill{m}{n}{o}{p}(i,1)) ;
+%                                     
+%                                 end
+%                                 xnew= raw_int.treadmill{m}{n}{o}{p}(:,1);
+%                                 v1new= raw_int.treadmill{m}{n}{o}{p}(:,2);
+%                                 v2new= raw_int.treadmill{m}{n}{o}{p}(:,3);
+%                                 v3new= raw_int.treadmill{m}{n}{o}{p}(:,4);
+%                                 vq1new = interp1(xnew,v1new,xqnew);
+%                                 vq2new = interp1(xnew,v2new,xqnew);
+%                                 vq3new = interp1(xnew,v3new,xqnew);
+%                             end
                             
                         end
                         
