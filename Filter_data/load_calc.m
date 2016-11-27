@@ -5,7 +5,7 @@
 % o= speed
 % p= gravity
 
-load raw_int
+% load raw_int
 %% Transfer into j_xyz part 2
 % Allocat jerk_grf.treadmill
 jerk_grf.treadmill= cell(1,12);
@@ -31,7 +31,8 @@ for m= 1:12 %Participants
                 if isempty( raw_int.treadmill{m}{n}{o}) ~= 1
                     for p=1:6   % Gravity
                         if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
-                            jerk_grf.treadmill{m}{n}{o}{p}(:,2)=jerk_xyz(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1:4));
+                            [jerk_grf.treadmill{m}{n}{o}{p}(:,2),jerk_grf.treadmill{m}{n}{o}{p}(:,3)]=jerk_pos(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
+%                             jerk_grf.treadmill{m}{n}{o}{p}(:,2)=jerk_pos(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1:4));
                             jerk_grf.treadmill{m}{n}{o}{p}(:,1)=raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1);
                         end
                     end
@@ -82,10 +83,11 @@ for m= 1:12
         end
     end
 end
+
 %%
 % Calculate mean of jerk_grf
 for m= 1:12
-    for n=1:5
+    for n=1:4%5
         if isempty(jerk_grf.treadmill{m}{n}) ~= 1
             for o=1:3
                 if isempty(jerk_grf.treadmill{m}{n}{o}) ~= 1
@@ -93,7 +95,7 @@ for m= 1:12
                         if isempty(jerk_grf.treadmill{m}{n}{o}{p}) ~= 1
                             data = jerk_grf.treadmill{m}{n}{o}{p}(:,2);
                             if isempty(data) ~= 1%length(data) > 0
-                                mjerk_grf.treadmill{m}{n}{o}{p}= mean(data);
+                            mjerk_grf.treadmill{m}{n}{o}{p}= sum(jerk_grf.treadmill{m}{n}{o}{p}(:,2))./sum(jerk_grf.treadmill{m}{n}{o}{p}(:,3));
                             end
                         end
                     end
@@ -102,7 +104,22 @@ for m= 1:12
         end
     end
 end
-
+%  Mean for forceplate data  
+for m= 1:12
+    for n= 5
+        if isempty(jerk_grf.treadmill{m}{5}) ~= 1
+            for o=1:3
+                if isempty(jerk_grf.treadmill{m}{5}{o}) ~= 1
+                    for p=1:6
+                        if isempty(jerk_grf.treadmill{m}{5}{o}{p}) ~= 1
+                                mjerk_grf.treadmill{m}{5}{o}{p}= mean(jerk_grf.treadmill{m}{5}{o}{p}(:,2)); % mean for 
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
 %% Transforming raw_int.outdoor into jerk_grf.outdoor with cutoff before 1000 and 1000 before end 
 % m= participants   (12)
 % n= device         (3)

@@ -7,27 +7,25 @@
 % 6.Plot a histogram to visually confirm that the mean of the Pearson residuals is equal to 0
 % 7.Plot the Pearson residuals versus the fitted values
 
-load results_jerkpos
+  load results_jerkpos
  %% 1.Plot each individual 
   device  = {'SP1' 'SW1' 'SP2' 'SW2'};
-%  for n = 1:length(device)
-%      filename = ['results_jerkpos.treadmill_' device{n}]  
-for button= 1:4
+for button= 3%1:4
     figure;
     for m= 1:12
-        x1=log(results_jerkpos.treadmill{button}{m}(1:6,1)); y1=results_jerkpos.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
+        x1=results_jerkpos.treadmill{button}{m}(1:6,1); y1=results_jerkpos.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
         try
             f1=fit(x1(idx),y1(idx),'poly1');
         catch
             display(['fitting error for participant ' , num2str(m)])
         end
-        x2=log(results_jerkpos.treadmill{button}{m}(7:12,1)) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
+        x2=results_jerkpos.treadmill{button}{m}(7:12,1) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
         try
             f2=fit(x2(idx),y2(idx),'poly1');
         catch
             display(['fitting error for participant ' , num2str(m)])
         end
-        x3=log(results_jerkpos.treadmill{button}{m}(13:18,1)) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
+        x3=results_jerkpos.treadmill{button}{m}(13:18,1) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
         try
             f3=fit(x3(idx),y3(idx),'poly1');
         catch
@@ -45,17 +43,96 @@ for button= 1:4
         xlabel('Jerk forceplate [m/s^3]');
         ylabel('Jerk smartphone [m/s^3]');
         legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
+        
     end
-%     filename= (['jerk_pos_',device{button}, '.pdf']);
-% print(filename,'-dpdf')
-end
+    filename= (['jerk_pos_nonlog',device{button}, '.pdf']);
+    print(filename,'-dpdf')
+end 
+%% Plot for all participants together
+device  = {'SP1' 'SW1' 'SP2' 'SW2'};
+for button= 3%1:4
+    figure;
+    for m= 2%1:12
+        x1=results_jerkpos.treadmill{button}{m}(1:6,1); y1=results_jerkpos.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
+        try
+            f1=fit(x1(idx),y1(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        x2=results_jerkpos.treadmill{button}{m}(7:12,1) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
+        try
+            f2=fit(x2(idx),y2(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        x3=results_jerkpos.treadmill{button}{m}(13:18,1) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
+        try
+            f3=fit(x3(idx),y3(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        
+        subplot(1,3,1)
+        plot(x1,y1,'*')
+%         axis([0 inf 0 inf])
+        hold on
+        plot(f1,'-');
+        title(['Walking with 5km/h  ', device{button}] );
+        xlabel('Jerk forceplate [m/s^3]');
+        ylabel('Jerk smartphone [m/s^3]');
+        
+        subplot(1,3,2)
+        plot(x2,y2,'o')
+%         axis([0 inf 0 inf])
+        hold on
+        plot(f2,'-');
+        title(['Jogging with 8km/h  ', device{button}] );
+        xlabel('Jerk forceplate [m/s^3]');
+        ylabel('Jerk smartphone [m/s^3]');
+        
+        subplot(1,3,3)
+        plot(x3,y3,'p')
+%         axis([0 inf 0 inf])
+        hold on
+        plot(f3,'-');
+        title(['Running with 12km/h  ', device{button}] );
+        xlabel('Jerk forceplate [m/s^3]');
+        ylabel('Jerk smartphone [m/s^3]');
 
- 
+    end
+    filename= (['jerk_pos_nonlog_all',device{button}, '.pdf']);
+    print(filename,'-dpdf')
+end
+%% Plot one participant on a logaritmic scale
+device  = {'SP1' 'SW1' 'SP2' 'SW2'};
+for button= 3%1:4
+    figure;
+    for m= 10%1:12
+        x1=results_jerkpos.treadmill{button}{m}(1:6,1); y1=results_jerkpos.treadmill{button}{m}(1:6,2);%idx = isfinite(x1) & isfinite(y1);
+%         plot(x1,y1,'*','linewidth',3)
+         semilogx(flip(x1),y1,'*','linewidth',3)
+%                  set(gca,'XDir','reverse')
+        hold on
+        x2=results_jerkpos.treadmill{button}{m}(7:12,1) ;y2=results_jerkpos.treadmill{button}{m}(7:12,2); %idx = isfinite(x2) & isfinite(y2);
+%         plot(x2,y2,'o','linewidth',3)
+                semilogx(flip(x2),y2,'o','linewidth',3)
+        x3=results_jerkpos.treadmill{button}{m}(13:18,1) ;y3=results_jerkpos.treadmill{button}{m}(13:18,2); %idx = isfinite(x3) & isfinite(y3);
+%         plot(x3,y3,'d','linewidth',3)
+                semilogx(flip(x3),y3,'d','linewidth',3)
+        grid on
+        title(['Participants 10  ', device{button}] );
+        xlabel('Jerk forceplate [m/s^3]');
+        ylabel('Jerk smartphone [m/s^3]');
+        legend ('Data points 5km/h','Data points 8km/h','Data points 12km/h','Location','northwest');
+    end
+    filename= (['jerk_pos_logsclae_P10',device{button}, '.pdf']);
+    print(filename,'-dpdf')
+end
 %%  Linear mixedmodel
 % 1.Plot Forceplate data versus the jerk estimate
-button=2;
+button=1;
 C=([results_jerkpos.treadmill{button}{1}(:,:);results_jerkpos.treadmill{button}{2}(:,:);results_jerkpos.treadmill{button}{3}(:,:);results_jerkpos.treadmill{button}{4}(:,:);results_jerkpos.treadmill{button}{5}(:,:);results_jerkpos.treadmill{button}{6}(:,:);results_jerkpos.treadmill{button}{7}(:,:);results_jerkpos.treadmill{button}{8}(:,:);results_jerkpos.treadmill{button}{9}(:,:);results_jerkpos.treadmill{button}{10}(:,:);results_jerkpos.treadmill{button}{11}(:,:);results_jerkpos.treadmill{button}{12}(:,:)]);
-C(:,1)=log(C(:,1));
+%   C(:,1)=log(C(:,1));
 figure;
 plot(C(:,2),C(:,1),'ro')
 xlabel('Jerk smartphone [m/s^3]')
