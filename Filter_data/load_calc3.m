@@ -1,5 +1,5 @@
 %% Transforming raw_int into jerk_jerk_pos with cutoff before 1000 and 1000 before end
-   load raw_int
+%    load raw_int
 %% Transfer into jerk_jerk_pos part 2
 % Allocat jerk_jerk_pos_data.treadmill
 jerk_jerk_pos.treadmill= cell(1,12);
@@ -42,6 +42,7 @@ for m= 1:12
                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
 %                         jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,3)=jerk(raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,6));
                         [jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,2),jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,3)]=jerk_fp(raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,6));
+                        jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,2)=jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,2)./BWperweight(p,m);
                         jerk_jerk_pos.treadmill{m}{5}{o}{p}(:,1)=raw_int.treadmill{m}{5}{o}{p}(1000:end-1000,1);
                     end
                 end

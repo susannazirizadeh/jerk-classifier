@@ -10,9 +10,9 @@ for i=1:6
     end
 end
 %%
-for m= 3:12
+for m= 1:12
     if isempty(raw_int.treadmill{m}{5}) ~= 1
-        for o= 1:3
+        for o= 1:3 
             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
                 for p=1:6
                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
@@ -24,27 +24,27 @@ for m= 3:12
     end
 end
 
-
-for m= 1
-    if isempty(raw_int.treadmill{m}{5}) ~= 1
-        for o=1:3
-            if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
-                for p=1:6
-                    if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
-                        raw_int.treadmill{m}{5}{o}{p}(:,6)=ForceCalc(raw_int.treadmill{m}{5}{o}{p}(:,2:5));%./BWperweight(p,m);  
-                        j=1;
-                        for i=1:length(raw_int.treadmill{m}{5}{o}{p}(:,1))
-                            if raw_int.treadmill{m}{5}{o}{p}(i,6)>0
-                                for q=1:6
-                                    raw_int.treadmill{m}{5}{o}{p}(j,q)= raw_int.treadmill{m}{5}{o}{p}(i,q);
-                                end
-                                j=j+1; 
-                            end
-                        end
-                      raw_int.treadmill{m}{5}{o}{p}(j:i,:)=[];
-                    end
-                end
-            end
-        end
-    end
-end
+% 
+% for m= 2%1
+%     if isempty(raw_int.treadmill{m}{5}) ~= 1
+%         for o=1%:3
+%             if isempty( raw_int.treadmill{m}{5}{o}) ~= 1
+%                 for p=1:6
+%                     if isempty( raw_int.treadmill{m}{5}{o}{p}) ~= 1
+%                         raw_int.treadmill{m}{5}{o}{p}(:,6)=ForceCalc(raw_int.treadmill{m}{5}{o}{p}(:,2:5));%./BWperweight(p,m);  
+%                         j=1;
+%                         for i=1:length(raw_int.treadmill{m}{5}{o}{p}(:,1))
+%                             if raw_int.treadmill{m}{5}{o}{p}(i,6)>0
+%                                 for q=1:6
+%                                     raw_int.treadmill{m}{5}{o}{p}(j,q)= raw_int.treadmill{m}{5}{o}{p}(i,q);
+%                                 end
+%                                 j=j+1; 
+%                             end
+%                         end
+%                       raw_int.treadmill{m}{5}{o}{p}(j:i,:)=[];
+%                     end
+%                 end
+%             end
+%         end
+%     end
+% end
