@@ -169,30 +169,47 @@ plotResiduals(lme1_12,'fitted')
 
 %% Leave-one-out Cross validation
 error5=zeros(50,1);
+rsq5=zeros(50,1);
 for i=1:50
     lme1_5=  fitlme(tbl5,'ForceRateFP~JerkSmartphone+(1|Participant)+(JerkSmartphone-1|Participant)','Exclude',[i]);
-    F=fitted(lme1_5);
-    error5(i,1)=F(i,1)-tbl5.ForceRateFP(i,1);
+    F=predict(lme1_5,tbl5);
+    error5(i,1)=(F(i,1)-tbl5.ForceRateFP(i,1)).^2;
+    rsq5(i,1)= 1 - sum((tbl5.ForceRateFP(i,1) -F(i,1)).^2)/sum((tbl5.ForceRateFP(i,1) - mean(tbl5.ForceRateFP(i,1))).^2);
 end 
 
 error8=zeros(66,1);
+rsq8=zeros(66,1);
 for i=1:66
     lme1_8=  fitlme(tbl8,'ForceRateFP~JerkSmartphone+(1|Participant)+(JerkSmartphone-1|Participant)','Exclude',[i]);
-    F=fitted(lme1_8);
-    error8(i,1)=F(i,1)-tbl8.ForceRateFP(i,1);
+    F=predict(lme1_8,tbl8);
+    error8(i,1)=(F(i,1)-tbl8.ForceRateFP(i,1)).^2;
+    rsq8(i,1)= 1 - sum((tbl8.ForceRateFP(i,1) -F(i,1)).^2)/sum((tbl8.ForceRateFP(i,1) - mean(tbl8.ForceRateFP(i,1))).^2);
 end 
 
 error12=zeros(66,1);
+rsq12=zeros(66,1);
 for i=1:66
     lme1_12=  fitlme(tbl12,'ForceRateFP~JerkSmartphone+(1|Participant)+(JerkSmartphone-1|Participant)','Exclude',[i]);
-    F=fitted(lme1_12);
-    error12(i,1)=F(i,1)-tbl12.ForceRateFP(i,1);
+    F=predict(lme1_12,tbl12);
+    error12(i,1)=(F(i,1)-tbl12.ForceRateFP(i,1)).^2;
+    rsq12(i,1)= 1 - sum((tbl12.ForceRateFP(i,1) -F(i,1)).^2)/sum((tbl12.ForceRateFP(i,1) - mean(tbl12.ForceRateFP(i,1))).^2);
 end 
+
+
 %%
-stats=zeros(3,4);
-stats(1,1)= nanmean(error5);
-stats(2,1)= nanmean(error8);
-stats(3,1)= nanmean(error12);
-stats(1,2)= nanstd(error5);
-stats(2,2)= nanstd(error8);
-stats(2,2)= nanstd(error12);
+stats=zeros(3,5);
+stats(1,1)= lme1_5.Rsquared.Ordinary;
+stats(2,1)= lme1_8.Rsquared.Ordinary;
+stats(3,1)= lme1_12.Rsquared.Ordinary;
+stats(1,2)= lme1_5.MSE;
+stats(2,2)= lme1_8.MSE;
+stats(3,2)= lme1_12.MSE;
+stats(1,3)= nanmean(rsq5);
+stats(2,3)= nanmean(rsq8);
+stats(3,3)= nanmean(rsq12);
+stats(1,4)= nanmean(error5);
+stats(2,4)= nanmean(error8);
+stats(3,4)= nanmean(error12);
+stats(1,5)= nanstd(error5);
+stats(2,5)= nanstd(error8);
+stats(3,5)= nanstd(error12);
