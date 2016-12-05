@@ -169,30 +169,36 @@ plotResiduals(lme1_12,'fitted')
 
 %% Leave-one-out Cross validation
 error5=zeros(50,1);
-rsq5=zeros(50,1);
+sum5_1=zeros(50,1);
+sum5_2=zeros(50,1);
 for i=1:50
     lme1_5=  fitlme(tbl5,'ForceRateFP~JerkSmartphone+(1|Participant)+(JerkSmartphone-1|Participant)','Exclude',[i]);
     F=predict(lme1_5,tbl5);
     error5(i,1)=(F(i,1)-tbl5.ForceRateFP(i,1)).^2;
-    rsq5(i,1)= 1 - sum((tbl5.ForceRateFP(i,1) -F(i,1)).^2)/sum((tbl5.ForceRateFP(i,1) - mean(tbl5.ForceRateFP(i,1))).^2);
+    sum5_1(i,1)=(tbl5.ForceRateFP(i,1) -F(i,1)).^2;
+    sum5_2(i,1)=(tbl5.ForceRateFP(i,1) - nanmean(tbl5.ForceRateFP(:,1))).^2;
 end 
 
 error8=zeros(66,1);
-rsq8=zeros(66,1);
+sum8_1=zeros(66,1);
+sum8_2=zeros(66,1);
 for i=1:66
     lme1_8=  fitlme(tbl8,'ForceRateFP~JerkSmartphone+(1|Participant)+(JerkSmartphone-1|Participant)','Exclude',[i]);
     F=predict(lme1_8,tbl8);
     error8(i,1)=(F(i,1)-tbl8.ForceRateFP(i,1)).^2;
-    rsq8(i,1)= 1 - sum((tbl8.ForceRateFP(i,1) -F(i,1)).^2)/sum((tbl8.ForceRateFP(i,1) - mean(tbl8.ForceRateFP(i,1))).^2);
+    sum8_1(i,1)=(tbl8.ForceRateFP(i,1) -F(i,1)).^2;
+    sum8_2(i,1)=(tbl8.ForceRateFP(i,1) - nanmean(tbl8.ForceRateFP(:,1))).^2;
 end 
 
 error12=zeros(66,1);
-rsq12=zeros(66,1);
+sum12_1=zeros(66,1);
+sum12_2=zeros(66,1);
 for i=1:66
     lme1_12=  fitlme(tbl12,'ForceRateFP~JerkSmartphone+(1|Participant)+(JerkSmartphone-1|Participant)','Exclude',[i]);
     F=predict(lme1_12,tbl12);
     error12(i,1)=(F(i,1)-tbl12.ForceRateFP(i,1)).^2;
-    rsq12(i,1)= 1 - sum((tbl12.ForceRateFP(i,1) -F(i,1)).^2)/sum((tbl12.ForceRateFP(i,1) - mean(tbl12.ForceRateFP(i,1))).^2);
+    sum12_1(i,1)=(tbl12.ForceRateFP(i,1) -F(i,1)).^2;
+    sum12_2(i,1)=(tbl12.ForceRateFP(i,1) - nanmean(tbl12.ForceRateFP(:,1))).^2;
 end 
 
 
@@ -204,9 +210,9 @@ stats(3,1)= lme1_12.Rsquared.Ordinary;
 stats(1,2)= lme1_5.MSE;
 stats(2,2)= lme1_8.MSE;
 stats(3,2)= lme1_12.MSE;
-stats(1,3)= nanmean(rsq5);
-stats(2,3)= nanmean(rsq8);
-stats(3,3)= nanmean(rsq12);
+stats(1,3)=  1 - (nansum(sum5_1)/nansum(sum5_2));
+stats(2,3)= 1 - (nansum(sum8_1)/nansum(sum8_2));
+stats(3,3)= 1 - (nansum(sum12_1)/nansum(sum12_2));
 stats(1,4)= nanmean(error5);
 stats(2,4)= nanmean(error8);
 stats(3,4)= nanmean(error12);
