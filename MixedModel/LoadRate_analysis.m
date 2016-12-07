@@ -3,41 +3,43 @@ load results_loadrate
 device  = {'SP1' 'SW1' 'SP2' 'SW2'};
 %% Plots 
   figure;
-for button= 1:4
-    
-    for m=2:12
-        x1=log(results_loadrate.treadmill{button}{m}(1:6,1)); y1=results_loadrate.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
-        try
-            f1=fit(x1(idx),y1(idx),'poly1');
-        catch
-            display(['fitting error for participant ' , num2str(m)])
-        end
-        x2=log(results_loadrate.treadmill{button}{m}(7:12,1)) ;y2=results_loadrate.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
-        try
-            f2=fit(x2(idx),y2(idx),'poly1');
-        catch
-            display(['fitting error for participant ' , num2str(m)])
-        end
-        x3=log(results_loadrate.treadmill{button}{m}(13:18,1)) ;y3=results_loadrate.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
-        try
-            f3=fit(x3(idx),y3(idx),'poly1');
-        catch
-            display(['fitting error for participant ' , num2str(m)])
-        end
-        subplot(2,2,button)
-        hold on
-        grid on
-        plot(x1,y1,'r*',x2,y2,'bo',x3,y3,'gd')
-%         plot(f1,'r-');
-%         plot(f2,'b-');
-%         plot(f3,'g-');
-        title(['Smartphone loadrate - Force plate load rate ', device{button}] );
-        xlabel('Load rate from ground reaction force [m/s^3]');
-        ylabel('Load rate smartphone [m/s^3]');
-        legend('walking 5km/h','running 8km/h', 'running 12km/h')
-    end
-    
-end
+  for button= 1:4
+      
+      for m=3:12
+          x1=log(results_loadrate.treadmill{button}{m}(1:6,1)); y1=results_loadrate.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
+          try
+              f1=fit(x1(idx),y1(idx),'poly1');
+          catch
+              display(['fitting error for participant ' , num2str(m)])
+          end
+          x2=log(results_loadrate.treadmill{button}{m}(7:12,1)) ;y2=results_loadrate.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
+          try
+              f2=fit(x2(idx),y2(idx),'poly1');
+          catch
+              display(['fitting error for participant ' , num2str(m)])
+          end
+          x3=log(results_loadrate.treadmill{button}{m}(13:18,1)) ;y3=results_loadrate.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
+          try
+              f3=fit(x3(idx),y3(idx),'poly1');
+          catch
+              display(['fitting error for participant ' , num2str(m)])
+          end
+          subplot(2,2,button)
+          hold on
+          grid on
+          plot(x1,y1,'r*',x2,y2,'bo',x3,y3,'gd')
+          %         plot(f1,'r-');
+          %         plot(f2,'b-');
+          %         plot(f3,'g-');
+          title(['Smartphone loadrate - Force plate loadrate ', device{button}] );
+          xlabel('Load rate from ground reaction force [N/s]');
+          ylabel('Load rate smartphone [N/s]');
+          legend('walking 5km/h','running 8km/h', 'running 12km/h')
+      end
+      
+  end
+  filename= ('Loadrate_SP_FP.pdf');
+  print(filename,'-dpdf')
 
 %% Linear model
 % 2.Linear regression model with random effect and without random effect

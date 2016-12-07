@@ -36,9 +36,9 @@ device  = {'SP1' 'SW1' 'SP2' 'SW2'};
          plot(x1,y1,'r*',x2,y2,'bo',x3,y3,'gd')
         hold on
         grid on
-        plot(f1,'r-');
-        plot(f2,'b-');
-        plot(f3,'g-');
+%         plot(f1,'r-');
+%         plot(f2,'b-');
+%         plot(f3,'g-');
         title(['Smartphone jerk - Bodyweight ', device{button}] );
         xlabel('Bodyweight [kg]');
         ylabel('Jerk smartphone [m/s^3]');
