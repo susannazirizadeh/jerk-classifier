@@ -10,13 +10,13 @@ load results_loadrate
 for button=1:4
     % C is excluding data for 5,8,12km/h of P1 and 5km/h of P2
     C=([results_loadrate.treadmill{button}{2}(:,7:end);results_loadrate.treadmill{button}{3}(:,:);results_loadrate.treadmill{button}{4}(:,:);results_loadrate.treadmill{button}{5}(:,:);results_loadrate.treadmill{button}{6}(:,:);results_loadrate.treadmill{button}{7}(:,:);results_loadrate.treadmill{button}{8}(:,:);results_loadrate.treadmill{button}{9}(:,:);results_loadrate.treadmill{button}{10}(:,:);results_loadrate.treadmill{button}{11}(:,:);results_loadrate.treadmill{button}{12}(:,:)]);
-    [bootstat,bootsam] = bootstrp(1000,@corr,C(:,1),C(:,1)); % bootstrapping data with correletion and data points
+    [bootstat,bootsam] = bootstrp(1000,[],C(:,1),C(:,1)); % bootstrapping data with correletion and data points
     for nboot=1:1000 %bootstrapping number, how often should the experiment be repetead
         for crossval= 1:1000
             bootsam_cross{crossval}=bootsam;
             exclude=randi([0 length(C)],1,1);
-            temp=find(bootsam_cross{crossval}(:,nboot));
-            bootsam_cross2{crossval}(:,nboot)=bootsam_cross{crossval}(find(bootsam_cross{crossval}(temp,nboot)~= exclude),nboot);
+%             temp=find(bootsam_cross{crossval}(:,nboot));
+            bootsam_cross2{crossval}(:,nboot)=bootsam_cross{crossval}(find(bootsam_cross{crossval}(n,nboot)~= exclude),nboot);
             j=1;
             for n=1:length(C)% how often within an experiment should be re-drawed
                 j=j+1;
