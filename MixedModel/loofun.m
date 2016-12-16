@@ -20,9 +20,17 @@ for crossval=1:1000
     LOOerror(1,1)= nansum((tbl.ForceRateFP(1:size(tbl),1) -F1(1:size(tbl),1)).^2)/size(tbl,1);
     LOOerror(1,2)= nansum((tbl.ForceRateFP(1:size(tbl),1) -F2(1:size(tbl),1)).^2)/size(tbl,1);
     LOOerror(1,3)= nansum((tbl.ForceRateFP(1:size(tbl),1) -F3(1:size(tbl),1)).^2)/size(tbl,1);
+    %R^2 value
+    sum1_1(1:size(tbl),1)=(tbl.ForceRateFP(1:size(tbl),1) -F1(1:size(tbl),1)).^2;
+    sum1_2(1:size(tbl),1)=(tbl.ForceRateFP(1:size(tbl),1) - nanmean(tbl.ForceRateFP(:,1))).^2;
+    sum2_1(1:size(tbl),1)=(tbl.ForceRateFP(1:size(tbl),1) -F2(1:size(tbl),1)).^2;
+    sum2_2(1:size(tbl),1)=(tbl.ForceRateFP(1:size(tbl),1) - nanmean(tbl.ForceRateFP(:,1))).^2;
+    sum3_1(1:size(tbl),1)=(tbl.ForceRateFP(1:size(tbl),1) -F3(1:size(tbl),1)).^2;
+    sum3_2(1:size(tbl),1)=(tbl.ForceRateFP(1:size(tbl),1) - nanmean(tbl.ForceRateFP(:,1))).^2;
     
+    LOOerror(1,4)=  1 - (nansum(sum1_1)/nansum(sum1_2));
+    LOOerror(1,5)=  1 - (nansum(sum2_1)/nansum(sum2_2));
+    LOOerror(1,6)=  1 - (nansum(sum3_1)/nansum(sum3_2));
 end
 
 end
-
-
