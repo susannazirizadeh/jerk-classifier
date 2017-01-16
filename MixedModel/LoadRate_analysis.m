@@ -28,18 +28,45 @@ device  = {'SP1' 'SW1' 'SP2' 'SW2'};
           hold on
           grid on
           plot(x1,y1,'r*',x2,y2,'bo',x3,y3,'gd')
-          %         plot(f1,'r-');
-          %         plot(f2,'b-');
-          %         plot(f3,'g-');
+%                    plot(f1,'r-');
+%                    plot(f2,'b-');
+%                    plot(f3,'g-');
           title(['Smartphone loadrate - Force plate loadrate ', device{button}] );
           xlabel('Load rate from ground reaction force [N/s]');
           ylabel('Load rate smartphone [N/s]');
           legend('walking 5km/h','running 8km/h', 'running 12km/h')
+          
+%            subplot(1,3,1)
+%           hold on
+%           grid on
+%           plot(x1,y1,'o')
+%           plot(f1,'-');
+%           title('Walking 5km/h');
+%           xlabel('Load rate from ground reaction force [N/s]');
+%           ylabel('Load rate smartphone [N/s]');
+%            subplot(1,3,2)
+%           hold on
+%           grid on
+%           plot(x2,y2,'o')
+%           plot(f1,'b-');
+%           title('Running 8km/h');
+%           xlabel('Load rate from ground reaction force [N/s]');
+%           ylabel('Load rate smartphone [N/s]');
+%           subplot(1,3,3)
+%           hold on
+%           grid on
+%           plot(x3,y3,'o')
+%           plot(f1,'g-');
+%           title('Running 12km/h');          
+%           xlabel('Load rate from ground reaction force [N/s]');
+%           ylabel('Load rate smartphone [N/s]');
       end
       
   end
   filename= ('Loadrate_SP_FP.pdf');
   print(filename,'-dpdf')
+  
+  
 
 %% Linear model
 % 2.Linear regression model with random effect and without random effect
