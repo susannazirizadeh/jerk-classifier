@@ -1,4 +1,4 @@
-function [j_pos, positives,sps] = jerk_pos( t,v )
+function [j_all, positives,sps] = jerk_all( t,v )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 % t= timestemp
@@ -14,7 +14,7 @@ j(2:end,:)=((a(2:end,:)-a(1:end-1,:))./(1/sps));
 
 positives(2:end,1) = j(2:end,2) <= 0;
 
-j_pos=sqrt(sum(j.^2,2)) .* positives;
+j_all=sqrt(sum(j.^2,2));
 
 end
 

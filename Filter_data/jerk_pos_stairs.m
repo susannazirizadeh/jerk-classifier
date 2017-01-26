@@ -1,4 +1,4 @@
-function [j_pos, positives,sps] = jerk_pos( t,v )
+function [j_pos, positives,sps] = jerk_pos_stairs( t,v )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 % t= timestemp
@@ -17,4 +17,3 @@ positives(2:end,1) = j(2:end,2) <= 0;
 j_pos=sqrt(sum(j.^2,2)) .* positives;
 
 end
-
