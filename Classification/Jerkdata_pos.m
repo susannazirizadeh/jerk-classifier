@@ -220,7 +220,7 @@ for n=1:2%length(device)
                             results.jerk_pos{n}{m}(:,6)=([m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m]); % participant 
                             results.jerk_pos{n}{m}(:,7)=cell2mat([mloadrate.outdoor{m}{3}{1}(1:5)';mloadrate.outdoor{m}{3}{2}(1:5)';mloadrate.outdoor{m}{3}{3}(1:5)';mloadrate.outdoor{m}{3}{4}(6:7)';mloadrate.outdoor{m}{3}{5}(6:7)']); %GPS
                             results.jerk_pos{n}{m}(:,8)= cell2mat([FFT.outdoor{m}{n}{1}(1:5)';FFT.outdoor{m}{n}{2}(1:5)';FFT.outdoor{m}{n}{3}(1:5)';FFT.outdoor{m}{n}{4}(6:7)';FFT.outdoor{m}{n}{5}(6:7)']); %frequency
-                            
+                            results.jerk_pos{n}{m}(:,9)= ([1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19]); % speed + condition
                         end
                     end
                 end
