@@ -103,26 +103,28 @@ for m= 1:length(partic)
                     if isempty(classification_data.jerk_all{m}{n}{o}) ~= 1
                         for p=1:5%length(con)
                             if isempty(classification_data.jerk_all{m}{n}{o}{p}) ~= 1
-                                for i= 1:250:length(classification_data.jerk_all{m}{n}{o}{p})
-                                    if i+500 < length(classification_data.jerk_all{m}{n}{o}{p}) % Windowing, window length= 500 data points (5 seconds) with 50% overlapping
+                                win=500;
+                                for i= 1:win/2:length(classification_data.jerk_all{m}{n}{o}{p})
+                                    if i+win < length(classification_data.jerk_all{m}{n}{o}{p}) % Windowing, window length= 500 data points (4 seconds) with 50% overlapping
                                         
-                                        sum_window = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+499,2));
-                                        count_nonzero = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+499,3));
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 249) / 250,1)= (sum_window./count_nonzero)*weight(m,1); % mean of 500 data points
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 249) / 250,2)= o; % speed
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 249) / 250,3)= p; % condition
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 249) / 250,4)= weight(m); %weight of participant
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 249) / 250,5)= m; % participant ID
+                                        sum_window = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+(win-1),2));
+                                        count_nonzero = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+(win-1),3));
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),1)= (sum_window./count_nonzero)*weight(m,1); % mean of 500 data points
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),2)= o; % speed
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),3)= p; % condition
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),4)= weight(m); %weight of participant
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),5)= m; % participant ID
                                     end
                                 end
-                                if isempty(classification_data.jerk_all{m}{3}{o}{p}) ~= 1 %GPS with 1Hz sampling frequency , window 5s
-                                    for i= 1:3:length(classification_data.jerk_all{m}{3}{o}{p})
-                                        if i+3 < length(classification_data.jerk_all{m}{3}{o}{p})
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,1)= (nanmean(classification_data.jerk_all{m}{3}{o}{p}(i:i+2,3)))*3.6;
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,2)= o; % speed
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,3)= p; % condition
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,4)= weight(m); %weight of participant
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,5)= m; % participant ID
+                                win=6;
+                                if isempty(classification_data.jerk_all{m}{3}{o}{p}) ~= 1 %GPS with 1Hz sampling frequency , window 4s
+                                    for i= 1:win/2:length(classification_data.jerk_all{m}{3}{o}{p})
+                                        if i+win < length(classification_data.jerk_all{m}{3}{o}{p})
+                                            mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),1)= (nanmean(classification_data.jerk_all{m}{3}{o}{p}(i:i+(win-1),3)))*3.6;
+                                            mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),2)= o; % speed
+                                            mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),3)= p; % condition
+                                            mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),4)= weight(m); %weight of participant
+                                            mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),5)= m; % participant ID
                                         end
                                     end
                                 end
@@ -130,30 +132,32 @@ for m= 1:length(partic)
                         end
                         for p= 6:7
                             if isempty(classification_data.jerk_all{m}{n}{o}{p}) ~= 1
-                                for i= 1:50:length(classification_data.jerk_all{m}{n}{o}{p})
-                                    if i+100 < length(classification_data.jerk_all{m}{n}{o}{p}) % Windowing, window length= 500 data points (5 seconds) with 50% overlapping
+                                win=100;
+                                for i= 1:win/2:length(classification_data.jerk_all{m}{n}{o}{p})
+                                    if i+win < length(classification_data.jerk_all{m}{n}{o}{p}) % Windowing, window length= 100 data points (5 seconds) with 50% overlapping
+                                        sum_window = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+(win-1),2));
+                                        count_nonzero = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+(win-1),3));
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),1)= (sum_window./count_nonzero)*weight(m,1); % mean of 500 data points
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),2)= o; % speed
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),3)= p; % condition
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),4)= weight(m); %weight of participant
+                                        mloadrate.outdoor{m}{n}{o}{p}((i + (win/2)-1) / (win/2),5)= m; % participant ID
+                                    end
+                                end 
+                             if isempty(classification_data.jerk_all{m}{n}{o}{p}) ~= 1
+                                %GPS with 1Hz sampling frequency , window 5s
+                                win=2;
+                                for i= 1:win/2:length(classification_data.jerk_all{m}{3}{o}{p})
+                                    if i+win < length(classification_data.jerk_all{m}{3}{o}{p})
+                                        mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),1)= (nanmean(classification_data.jerk_all{m}{3}{o}{p}(i:i+(win-1),3)))*3.6;
+                                        mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),2)= o; % speed
+                                        mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),3)= p; % condition
+                                        mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),4)= weight(m); %weight of participant
+                                        mloadrate.outdoor{m}{3}{o}{p}((i + (win/2)-1) / (win/2),5)= m; % participant ID
                                         
-                                        sum_window = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+99,2));
-                                        count_nonzero = sum(classification_data.jerk_all{m}{n}{o}{p}(i:i+99,3));
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 49) / 50,1)= (sum_window./count_nonzero)*weight(m,1); % mean of 500 data points
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 49) / 50,2)= o; % speed
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 49) / 50,3)= p; % condition
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 49) / 50,4)= weight(m); %weight of participant
-                                        mloadrate.outdoor{m}{n}{o}{p}((i + 49) / 50,5)= m; % participant ID
                                     end
                                 end
-                                if isempty(classification_data.jerk_all{m}{3}{o}{p}) ~= 1 %GPS with 1Hz sampling frequency , window 5s
-                                    for i= 1:3:length(classification_data.jerk_all{m}{3}{o}{p})
-                                        if i+3 < length(classification_data.jerk_all{m}{3}{o}{p})
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,1)= (nanmean(classification_data.jerk_all{m}{3}{o}{p}(i:i+2,3)))*3.6;
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,2)= o; % speed
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,3)= p; % condition
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,4)= weight(m); %weight of participant
-                                            mloadrate.outdoor{m}{3}{o}{p}((i + 2) / 3,5)= m; % participant ID
-                                            
-                                        end
-                                    end
-                                end
+                             end 
                             end
                         end
                     end
