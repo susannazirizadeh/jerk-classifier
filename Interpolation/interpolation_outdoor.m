@@ -5,7 +5,7 @@
 % p= condition      (7) (asphalt,grass,soil,inlcineup, inclinedown, stairsup, stairs down) 
 
 % clear all
-% load raw_data
+ load raw_data
 
 % mean(j(find(j>0)))
 %% Allocat raw_zero,raw_nans and raw_int for outdoor session
@@ -37,19 +37,19 @@ for m= 1:12
     end
 end 
 
-% raw_int.outdoor= cell(1,12);
-% for m= 1:12
-%     raw_int.outdoor{m}= cell(1,3);
-%     for n=1:3
-%         raw_int.outdoor{m}{n}= cell(1,5);
-%         for o=1:5
-%             raw_int.outdoor{m}{n}{o}= cell(1,7);
-%             for p=1:7
-%                 raw_int.outdoor{m}{n}{o}{p}= [];
-%             end
-%         end
-%     end
-% end 
+raw_int.outdoor= cell(1,12);
+for m= 1:12
+    raw_int.outdoor{m}= cell(1,3);
+    for n=1:3
+        raw_int.outdoor{m}{n}= cell(1,5);
+        for o=1:5
+            raw_int.outdoor{m}{n}{o}= cell(1,7);
+            for p=1:7
+                raw_int.outdoor{m}{n}{o}{p}= [];
+            end
+        end
+    end
+end 
 
 
 % for m= 1:12
@@ -133,21 +133,24 @@ for m= 1:12 %participants
                 for o=1:5 %speed
                     if isempty( raw_data.outdoor{m}{n}{o}) ~= 1
                         for p=1:7
-                            if isempty( raw_data.outdoor{m}{n}{o}{p}) ~= 1
-                                x= raw_data.outdoor{m}{3}{o}{p}(:,1); % ts that we already have
-                                t= raw_data.outdoor{m}{1}{o}{p}(:,1);
-                                tnew=t/10^3;
-                                sps=round(1/mean(tnew(2:end,1)-tnew(1:end-1,1)));
-                                xq= (min(x):sps/10^3:max(x))'; % query points, the ts that we still need
-                                v1= raw_data.outdoor{m}{3}{o}{p}(:,2);% observation vector which we already have
-                                v2= raw_data.outdoor{m}{3}{o}{p}(:,3);
-                                vq1 = interp1(x,v1,xq); % points that we interpolated
-                                vq2 = interp1(x,v2,xq);
-                                x_all=([x;xq_new]);
-                                x_all=sort(x_all);
-                                raw_int.outdoor{m}{3}{o}{p}(:,1)= x_all;
-                                raw_int.outdoor{m}{3}{o}{p}(:,2)= vq1;
-                                raw_int.outdoor{m}{3}{o}{p}(:,3)= vq2;
+                            if isempty( raw_data.outdoor{m}{1}{o}{p}) ~= 1
+                                if isempty( raw_data.outdoor{m}{3}{o}{p}) ~= 1
+                                    if length(raw_data.outdoor{m}{3}{o}{p}(:,1))>1;
+                                        x= raw_data.outdoor{m}{3}{o}{p}(:,1); % ts that we already have
+                                        xq= raw_data.outdoor{m}{1}{o}{p}(:,1);  % 8 trial and error, this lines finds the same end value of x and xq so that interpolation is possible
+                                        index=find (abs(raw_data.outdoor{m}{1}{o}{p}(:,1)-x(end,1)) < 8); % the index which the GPS stopped to record anymore
+                                        xq= raw_data.outdoor{m}{1}{o}{p}(1:index,1);
+                                        v1= raw_data.outdoor{m}{3}{o}{p}(:,2);% observation vector which we already have
+                                        v2= raw_data.outdoor{m}{3}{o}{p}(:,3);
+                                        vq1 = interp1(x,v1,xq); % points that we interpolated
+                                        vq2 = interp1(x,v2,xq);
+                                        x_new=sort([xq;x]);
+                                        [new_xq,ia,ib]=intersect(x_new,xq);
+                                        raw_int.outdoor{m}{3}{o}{p}(:,1)= new_xq;
+                                        raw_int.outdoor{m}{3}{o}{p}(:,2)= vq1(1:length(new_xq),1);
+                                        raw_int.outdoor{m}{3}{o}{p}(:,3)= vq2(1:length(new_xq),1);
+                                    end
+                                end
                             end
                         end
                     end
