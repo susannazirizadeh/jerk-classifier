@@ -1,6 +1,6 @@
  %% Preparing acceleration data for classification
  % 1. PSD estimate for cut-off frequency
- % 2. Filter data with high-pass filter
+ % 2. Filter data with band-pass filter
  % 3. Feature extraction of 'Load rate'
  %      3.1 Time-domain 
  %      3.2 Frequency-domain
@@ -26,41 +26,13 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 %  end 
 
 % decided cut-off filter 0.5 Hz and 10Hz
-%% 2. Filter data with high-pass filter
-% Allocat classification_data.acc_pos
-raw_filt.outdoor= cell(1,length(partic));
-for m= 1:length(partic)
-    raw_filt.outdoor{m}= cell(1,length(device));
-    for n=1:length(device)
-        raw_filt.outdoor{m}{n}= cell(1,length(speed));
-        for o=1:length(speed)
-            raw_filt.outdoor{m}{n}{o}= cell(1,length(con));
-            for p=1:length(con)
-                raw_filt.outdoor{m}{n}{o}{p}= [];
-            end
-        end
-    end
-end
-% Bandpass filter 
-for m= 1:length(partic) %Participants
-    if isempty(raw_int.outdoor{m}) ~= 1
-        for n=1%:2%length(device) % Excluding GPS
-            if isempty(raw_int.outdoor{m}{n}) ~= 1
-                for o=1:length(speed)   % Speed
-                    if isempty( raw_int.outdoor{m}{n}{o}) ~= 1
-                        for p=1:5%length(con)   % Conditions
-                            if isempty( raw_int.outdoor{m}{n}{o}{p}) ~= 1
-                            [ raw_filt.outdoor{m}{n}{o}{p}(:,:)] = bandpass(raw_int.outdoor{m}{n}{o}{p}(:,:));
-                            end 
-                        end
-                    end
-                    for p=6:7 %length(con)   % Conditions
-                        if isempty( raw_int.outdoor{m}{n}{o}{p}) ~= 1
-                            [ raw_filt.outdoor{m}{n}{o}{p}(:,:)] = bandpass(raw_int.outdoor{m}{n}{o}{p}(:,:));
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
+%% 2. Filter data with band pass filter cut of 0.5Hz and 10Hz
+% Bandpass filter for cascade cell array
+[ raw_filt.outdoor ] = cascade( @allocation_empty,@bandpass,raw_int.outdoor,0,0,0,0);
+
+%%   3. Feature extraction of 'Load rate' window size= 4s
+ %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS)
+[ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_filt.outdoor, 500,100,500,10);
+ %      3.2 Frequency-domain (FFT, main F, max, F, energy, entropy) 
+ 
+ 
