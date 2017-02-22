@@ -13,14 +13,14 @@ for m= 1:12 %Participants
                     if isempty( input{m}{n}{o}) ~= 1
                         for p=1:5  % Conditions
                             if isempty( input{m}{n}{o}{p}) ~= 1
-                                [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra1,cutoff1,weight(m,1));
+                                [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra1,cutoff1,weight(m,1),m,o,p);
                             end
                         end
                     end
                 end
                 for p=6:7    % Conditions
                     if isempty( input{m}{n}{o}{p}) ~= 1
-                        [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra2,cutoff2,weight(m,1));
+                        [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra2,cutoff2,weight(m,1),m,o,p);
                     end
                 end
             end

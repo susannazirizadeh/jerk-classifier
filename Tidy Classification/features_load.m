@@ -1,7 +1,7 @@
-function [ output ] = features_loadrate( input,win,cutoff, weight,m,o,p)
+function [ output ] = features_load( input,win,cutoff, weight, m,o,p)
 %UNTITLED9 Summary of this function goes here
 %   Detailed explanation goes here
-[temp,fs]=jerk_all(input(cutoff:end-cutoff,1:4));
+[temp,fs]=acc_all(input(cutoff:end-cutoff,1:4));
 output=NaN(20,14);
 for i= 1:win/2:length(temp)
     if i+win < length(temp) % Windowing, window length= 500 data points (4 seconds) with 50% overlapping

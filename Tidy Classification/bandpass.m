@@ -1,4 +1,4 @@
-function [ x_filt ] = bandpass( v, extra,cutoff, weight)
+function [ x_filt ] = bandpass( v, extra,cutoff, weight, m,o,p)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 data=v(:,2:4);

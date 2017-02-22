@@ -31,8 +31,13 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 [ raw_filt.outdoor ] = cascade( @allocation_empty,@bandpass,raw_int.outdoor,0,0,0,0);
 
 %%   3. Feature extraction of 'Load rate' window size= 4s
- %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS)
+ %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
 [ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_filt.outdoor, 500,100,500,10);
- %      3.2 Frequency-domain (FFT, main F, max, F, energy, entropy) 
  
- 
+%%   4. Feature extraction of 'Load' window size= 4s
+ %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
+[ features.load ] = cascade( @allocation_empty,@features_load,raw_filt.outdoor, 500,100,500,10);
+  
+%%  5. Feature matrix
+[ featuresmatrix ] = matrixmaker( features.load);
+
