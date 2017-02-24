@@ -1,8 +1,8 @@
-function [ output ] = features_loadrate( input,win,cutoff, weight,m,o,p)
+function [ output ] = features_loadrate( input,win,cutoff, weight,m,o,p,distance)
 %UNTITLED9 Summary of this function goes here
 %   Detailed explanation goes here
 [temp,fs]=jerk_all(input(cutoff:end-cutoff,1:4));
-output=NaN(20,14);
+output=NaN(1,14);
 for i= 1:win/2:length(temp)
     if i+win < length(temp) % Windowing, window length= 500 data points (4 seconds) with 50% overlapping
         % Time -domain features
@@ -18,7 +18,7 @@ for i= 1:win/2:length(temp)
         output((i + (win/2)-1) / (win/2),6)= rms((temp(i:i+(win-1),1)).*weight);
         % frequency domain features
         t=([0:win-1]/fs)';
-        [pks,locs] = findpeaks(temp(i:i+(win-1),1),t,'MinPeakDistance',t(80));
+        [pks,locs] = findpeaks(temp(i:i+(win-1),1),t,'MinPeakDistance',t(distance));
         output((i + (win/2)-1) / (win/2),7)=mean(diff(locs)/fs);
 
         output((i + (win/2)-1) / (win/2),8)= mode(diff(locs)/fs);

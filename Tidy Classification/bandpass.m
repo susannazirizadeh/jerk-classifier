@@ -1,8 +1,8 @@
-function [ x_filt ] = bandpass( v, extra,cutoff, weight, m,o,p)
+function [ x_filt ] = bandpass( v, extra,cutoff, weight, m,o,p,distance)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
-data=v(:,2:4);
-tnew=v(:,1)/10^3;
+data=v(5:end-4,2:4);
+tnew=v(5:end-4,1)/10^3;
 t=tnew(2:end,1)-tnew(1:end-1,1);
 fs=round(1/mean(t(2:end-1,1)));    % sampling frequency
 fc1=10;   % Hz

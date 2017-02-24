@@ -1,21 +1,21 @@
-function [ output ] = features_load( input,win,cutoff, weight, m,o,p, distance)
+function [ output ] = features_jerk( input,win,cutoff, weight,m,o,p,distance)
 %UNTITLED9 Summary of this function goes here
 %   Detailed explanation goes here
-[temp,fs]=acc_all(input(cutoff:end-cutoff,1:4));
+[temp,fs]=jerk_all(input(cutoff:end-cutoff,1:4));
 output=NaN(1,14);
 for i= 1:win/2:length(temp)
     if i+win < length(temp) % Windowing, window length= 500 data points (4 seconds) with 50% overlapping
         % Time -domain features
-        output((i + (win/2)-1) / (win/2),1)= nanmean((temp(i:i+(win-1),1)).*weight); % mean of 500 data points
+        output((i + (win/2)-1) / (win/2),1)= nanmean(temp(i:i+(win-1),1)); % mean of 500 data points
         
-        output((i + (win/2)-1) / (win/2),2)= max((temp(i:i+(win-1),1)).*weight);    % max value
+        output((i + (win/2)-1) / (win/2),2)= max(temp(i:i+(win-1),1));    % max value
         
-        output((i + (win/2)-1) / (win/2),3)= min((temp(i:i+(win-1),1)).*weight);    % min value
+        output((i + (win/2)-1) / (win/2),3)= min(temp(i:i+(win-1),1));    % min value
         
-        output((i + (win/2)-1) / (win/2),4)= var((temp(i:i+(win-1),1)).*weight);    % variance of the vector
+        output((i + (win/2)-1) / (win/2),4)= var(temp(i:i+(win-1),1));    % variance of the vector
         
-        output((i + (win/2)-1) / (win/2),5)= std((temp(i:i+(win-1),1)).*weight);    % standard deviation
-        output((i + (win/2)-1) / (win/2),6)= rms((temp(i:i+(win-1),1)).*weight);
+        output((i + (win/2)-1) / (win/2),5)= std(temp(i:i+(win-1),1));    % standard deviation
+        output((i + (win/2)-1) / (win/2),6)= rms(temp(i:i+(win-1),1));
         % frequency domain features
         t=([0:win-1]/fs)';
         [pks,locs] = findpeaks(temp(i:i+(win-1),1),t,'MinPeakDistance',t(distance));

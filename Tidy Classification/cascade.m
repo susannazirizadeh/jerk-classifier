@@ -9,18 +9,22 @@ for m= 1:12 %Participants
     if isempty(input{m}) ~= 1
         for n=1:2%3 % Device
             if isempty(input{m}{n}) ~= 1
-                for o=1:5   % Speed
+                for o=1:3   % Speed
                     if isempty( input{m}{n}{o}) ~= 1
                         for p=1:5  % Conditions
                             if isempty( input{m}{n}{o}{p}) ~= 1
-                                [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra1,cutoff1,weight(m,1),m,o,p);
+                                [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra1,cutoff1,weight(m,1),m,o,p,80);
                             end
                         end
                     end
                 end
-                for p=6:7    % Conditions
-                    if isempty( input{m}{n}{o}{p}) ~= 1
-                        [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra2,cutoff2,weight(m,1),m,o,p);
+                for o=4:5   % Speed
+                    if isempty( input{m}{n}{o}) ~= 1
+                        for p=6:7    % Conditions
+                            if isempty( input{m}{n}{o}{p}) ~= 1
+                                [ output{m}{n}{o}{p}(:,:)] = fun(input{m}{n}{o}{p}(:,:),extra2,cutoff2,weight(m,1),m,o,p,10);
+                            end
+                        end
                     end
                 end
             end
