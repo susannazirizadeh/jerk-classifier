@@ -39,5 +39,27 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 [ features.load ] = cascade( @allocation_empty,@features_load,raw_filt.outdoor, 400,100,500,50);
 [ features.acc ] = cascade( @allocation_empty,@features_acc,raw_filt.outdoor, 400,100,500,50);  
 %%  5. Feature matrix
-[ featurematrix ] = matrixmaker( features.loadrate);
+[ featurematrix_loadrate ] = matrixmaker( features.loadrate);
+[ featurematrix_load ] = matrixmaker( features.load);
+featurematrix(:,1:10)= featurematrix_loadrate(:,1:10);
+featurematrix(:,11:24)= featurematrix_load(:,1:14);
 
+%% SVM activity
+
+% [accuracyActivty] = actvityClassifier(featurematrix);
+%  
+%  final_accuracy_ac=mean(accuracy);
+%  x=sort(accuracy);
+%  upperCV_ac=x(97,1);
+%  lowerCV_ac=x(3,1);
+%% 6. Terrain matrix
+ terrain_matrix=featurematrix(find(featurematrix(:,22)<4),:); % just
+% including running on different terrains
+ %% SVM classifier 
+ [accuracyTerrain] = terrainClassifier(terrain_matrix);
+ 
+ final_accuracy_te=mean(accuracy);
+ x=sort(accuracy);
+ upperCV_te=x(97,1);
+ lowerCV_te=x(3,1);
+%% 

@@ -14,32 +14,32 @@ for i= 1:win/2:length(temp)
         
         output((i + (win/2)-1) / (win/2),4)= var((temp(i:i+(win-1),1)).*weight);    % variance of the vector
         
-        output((i + (win/2)-1) / (win/2),5)= std((temp(i:i+(win-1),1)).*weight);    % standard deviation
-        output((i + (win/2)-1) / (win/2),6)= rms((temp(i:i+(win-1),1)).*weight);
+        output((i + (win/2)-1) / (win/2),5)= std((temp(i:i+(win-1),1)).*weight);                % standard deviation
+        output((i + (win/2)-1) / (win/2),6)= rms((temp(i:i+(win-1),1)).*weight);                % Root mean square 
         % frequency domain features
         t=([0:win-1]/fs)';
         [pks,locs] = findpeaks(temp(i:i+(win-1),1),t,'MinPeakDistance',t(distance));
-        output((i + (win/2)-1) / (win/2),7)=mean(diff(locs)/fs);
+        output((i + (win/2)-1) / (win/2),7)=mean(diff(locs)/fs);                                % mean frequency
 
-        output((i + (win/2)-1) / (win/2),8)= mode(diff(locs)/fs);
+        output((i + (win/2)-1) / (win/2),8)= mode(diff(locs)/fs);                               % dominant frequency 
         
         Xf = fft(temp(i:i+(win-1),1)); % compute the FFT (using the Fast Fourier Transform)
-        output((i + (win/2)-1) / (win/2),9) = sum(abs(Xf).^2) / length(Xf); %Energy
+        output((i + (win/2)-1) / (win/2),9) = sum(abs(Xf).^2) / length(Xf);                     % Energy
         
         [counts,binCenters] = hist(temp(i:i+(win-1)),100);
         binWidth = diff(binCenters);
         binWidth = [binWidth(end),binWidth]; % Replicate last bin width for first, which is indeterminate.
         nz = counts>0; % Index to non-zero bins
         frequency = counts(nz)/sum(counts(nz));
-        output((i + (win/2)-1) / (win/2),10)= -sum(frequency.*log(frequency./binWidth(nz)));
+        output((i + (win/2)-1) / (win/2),10)= -sum(frequency.*log(frequency./binWidth(nz)));    % Entropy
+            
+        output((i + (win/2)-1) / (win/2),11)= o;                                                % speed
         
-        output((i + (win/2)-1) / (win/2),11)= o; % speed
+        output((i + (win/2)-1) / (win/2),12)= p;                                                % condition
         
-        output((i + (win/2)-1) / (win/2),12)= p; % condition
+        output((i + (win/2)-1) / (win/2),13)= weight;                                           % weight of participant
         
-        output((i + (win/2)-1) / (win/2),13)= weight; %weight of participant
-        
-        output((i + (win/2)-1) / (win/2),14)= m; % participant ID
+        output((i + (win/2)-1) / (win/2),14)= m;                                                % participant ID
     end
 end
 
