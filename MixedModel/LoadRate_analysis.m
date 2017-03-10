@@ -2,70 +2,126 @@
 load results_loadrate
 device  = {'SP1' 'SW1' 'SP2' 'SW2'};
 %% Plots 
-  figure;
-  for button= 1:4
+figure;
+for button= 1:4
+    
+    for m=3:12
+        x1=log(results_loadrate.treadmill{button}{m}(1:6,1)); y1=results_loadrate.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
+        try
+            f1=fit(x1(idx),y1(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        x2=log(results_loadrate.treadmill{button}{m}(7:12,1)) ;y2=results_loadrate.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
+        try
+            f2=fit(x2(idx),y2(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        x3=log(results_loadrate.treadmill{button}{m}(13:18,1)) ;y3=results_loadrate.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
+        try
+            f3=fit(x3(idx),y3(idx),'poly1');
+        catch
+            display(['fitting error for participant ' , num2str(m)])
+        end
+        subplot(2,2,button)
+        hold on
+        grid on
+        plot(x1,y1,'r*',x2,y2,'bo',x3,y3,'gd')
+        %                    plot(f1,'r-');
+        %                    plot(f2,'b-');
+        %                    plot(f3,'g-');
+        title(['Smartphone loadrate - Force plate loadrate ', device{button}] );
+        xlabel('Load rate from ground reaction force [N/s]');
+        ylabel('Load rate smartphone [N/s]');
+        legend('walking 5km/h','running 8km/h', 'running 12km/h')
+        
+        %            subplot(1,3,1)
+        %           hold on
+        %           grid on
+        %           plot(x1,y1,'o')
+        %           plot(f1,'-');
+        %           title('Walking 5km/h');
+        %           xlabel('Load rate from ground reaction force [N/s]');
+        %           ylabel('Load rate smartphone [N/s]');
+        %            subplot(1,3,2)
+        %           hold on
+        %           grid on
+        %           plot(x2,y2,'o')
+        %           plot(f1,'b-');
+        %           title('Running 8km/h');
+        %           xlabel('Load rate from ground reaction force [N/s]');
+        %           ylabel('Load rate smartphone [N/s]');
+        %           subplot(1,3,3)
+        %           hold on
+        %           grid on
+        %           plot(x3,y3,'o')
+        %           plot(f1,'g-');
+        %           title('Running 12km/h');
+        %           xlabel('Load rate from ground reaction force [N/s]');
+        %           ylabel('Load rate smartphone [N/s]');
+    end
+    
+end
+filename= ('Loadrate_SP_FP.pdf');
+print(filename,'-dpdf')
+
+%% Plots for paper
+figure;
+button=3;
+for m=3:12
+    x1=log(results_loadrate.treadmill{button}{m}(1:6,1)); y1=results_loadrate.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
+    try
+        f1=fit(x1(idx),y1(idx),'poly1');
+    catch
+        display(['fitting error for participant ' , num2str(m)])
+    end
+    x2=log(results_loadrate.treadmill{button}{m}(7:12,1)) ;y2=results_loadrate.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
+    try
+        f2=fit(x2(idx),y2(idx),'poly1');
+    catch
+        display(['fitting error for participant ' , num2str(m)])
+    end
+    x3=log(results_loadrate.treadmill{button}{m}(13:18,1)) ;y3=results_loadrate.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
+    try
+        f3=fit(x3(idx),y3(idx),'poly1');
+    catch
+        display(['fitting error for participant ' , num2str(m)])
+    end
+    hold on
+    grid on
+    plot(x1,y1,'ro',x2,y2,'bo',x3,y3,'go','LineWidth',2)
+    %           title(['Smartphone loadrate - Force plate loadrate ', device{button}] );
+    %           xlabel('Load rate from ground reaction force [N/s]');
+    %           ylabel('Load rate smartphone [N/s]');
+    %           legend('walking 5km/h','running 8km/h', 'running 12km/h')
+    
+end
       
-      for m=3:12
-          x1=log(results_loadrate.treadmill{button}{m}(1:6,1)); y1=results_loadrate.treadmill{button}{m}(1:6,2);idx = isfinite(x1) & isfinite(y1);
-          try
-              f1=fit(x1(idx),y1(idx),'poly1');
-          catch
-              display(['fitting error for participant ' , num2str(m)])
-          end
-          x2=log(results_loadrate.treadmill{button}{m}(7:12,1)) ;y2=results_loadrate.treadmill{button}{m}(7:12,2); idx = isfinite(x2) & isfinite(y2);
-          try
-              f2=fit(x2(idx),y2(idx),'poly1');
-          catch
-              display(['fitting error for participant ' , num2str(m)])
-          end
-          x3=log(results_loadrate.treadmill{button}{m}(13:18,1)) ;y3=results_loadrate.treadmill{button}{m}(13:18,2); idx = isfinite(x3) & isfinite(y3);
-          try
-              f3=fit(x3(idx),y3(idx),'poly1');
-          catch
-              display(['fitting error for participant ' , num2str(m)])
-          end
-          subplot(2,2,button)
-          hold on
-          grid on
-          plot(x1,y1,'r*',x2,y2,'bo',x3,y3,'gd')
-%                    plot(f1,'r-');
-%                    plot(f2,'b-');
-%                    plot(f3,'g-');
-          title(['Smartphone loadrate - Force plate loadrate ', device{button}] );
-          xlabel('Load rate from ground reaction force [N/s]');
-          ylabel('Load rate smartphone [N/s]');
-          legend('walking 5km/h','running 8km/h', 'running 12km/h')
-          
-%            subplot(1,3,1)
-%           hold on
-%           grid on
-%           plot(x1,y1,'o')
-%           plot(f1,'-');
-%           title('Walking 5km/h');
-%           xlabel('Load rate from ground reaction force [N/s]');
-%           ylabel('Load rate smartphone [N/s]');
-%            subplot(1,3,2)
-%           hold on
-%           grid on
-%           plot(x2,y2,'o')
-%           plot(f1,'b-');
-%           title('Running 8km/h');
-%           xlabel('Load rate from ground reaction force [N/s]');
-%           ylabel('Load rate smartphone [N/s]');
-%           subplot(1,3,3)
-%           hold on
-%           grid on
-%           plot(x3,y3,'o')
-%           plot(f1,'g-');
-%           title('Running 12km/h');          
-%           xlabel('Load rate from ground reaction force [N/s]');
-%           ylabel('Load rate smartphone [N/s]');
-      end
-      
-  end
-  filename= ('Loadrate_SP_FP.pdf');
+  filename= ('Loadrate_SP2_paper.pdf');
   print(filename,'-dpdf')
   
+  
+%% Plot without log
+figure;
+button=3;
+for m=3:12
+    x1=results_loadrate.treadmill{button}{m}(1:6,1); y1=results_loadrate.treadmill{button}{m}(1:6,2);
+    x2=results_loadrate.treadmill{button}{m}(7:12,1) ;y2=results_loadrate.treadmill{button}{m}(7:12,2); 
+    x3=results_loadrate.treadmill{button}{m}(13:18,1) ;y3=results_loadrate.treadmill{button}{m}(13:18,2);
+    hold on
+    grid on
+    plot(x1,y1,'ro',x2,y2,'bo',x3,y3,'go','LineWidth',2)
+    set(get(gcf,'CurrentAxes'),'FontName','Times New Roman','FontSize',14)
+    %           title(['Smartphone loadrate - Force plate loadrate ', device{button}] );
+    %           xlabel('Load rate from ground reaction force [N/s]');
+    %           ylabel('Load rate smartphone [N/s]');
+    %           legend('walking 5km/h','running 8km/h', 'running 12km/h')
+    
+end
+      
+  filename= ('Loadrate_SP2_paper2.pdf');
+  print(filename,'-dpdf')
   
 
 %% Linear model

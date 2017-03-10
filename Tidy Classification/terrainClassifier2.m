@@ -1,4 +1,4 @@
-function [accuracy,participant] = terrainClassifier(trainingData)
+function [accuracy,participant] = terrainClassifier2(trainingData)
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
 accuracy=zeros(100,1);
@@ -13,7 +13,7 @@ for i=1:100
     
     inputTable = array2table(X, 'VariableNames', {'mean_loadrate', 'max_loadrate', 'min_loadrate', 'var_loadrate', 'STD_loadrate', 'RMS_loadrate', 'mean_f_loadrate', 'dom_f_loadrate', 'energy_loadrate', 'entropy_loadrate', 'mean_load', 'max_load', 'min_load', 'var_load', 'STD_load', 'RMS_load', 'mean_f_load', 'dom_f_load', 'energy_load', 'entropy_load', 'speed', 'condition', 'weight', 'ID'});
     
-    predictorNames = {'mean_loadrate', 'max_loadrate', 'min_loadrate', 'var_loadrate', 'STD_loadrate', 'RMS_loadrate', 'mean_f_loadrate', 'dom_f_loadrate', 'energy_loadrate', 'entropy_loadrate', 'mean_load', 'max_load', 'min_load', 'var_load', 'STD_load', 'RMS_load', 'mean_f_load', 'dom_f_load', 'energy_load', 'entropy_load', 'speed', 'weight', 'ID'};
+    predictorNames =  {'max_load','STD_load','mean_f_load', 'dom_f_load', 'weight'};
     predictors = inputTable(:, predictorNames);
     response = inputTable.condition;
     
@@ -37,9 +37,10 @@ for i=1:100
     predictors_test = inputTable_test(:, predictorNames);
     response_test = inputTable_test.condition;
     
-    label= predict(classificationSVM,inputTable_test);      % testing data
-    wahr=(find((label==response_test)==1));                % errors in labeling
-    accuracy(i,1)=length(wahr)/length(label);              % accuracy calculated from error and all data
+    label= predict(classificationSVM,inputTable_test);  % testing data
+    error=(find((label==response_test)==0));            % errors in labeling 
+    accuracy(i,1)=length(error)/length(label);          % accuracy calculated from error and all data
+    
 end
 
 end
