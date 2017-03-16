@@ -30,13 +30,13 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 
 %%   3. Feature extraction of 'Load rate' window size= 4s
 %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
-[ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_filt.outdoor,400,100,500,50);
-[ features.jerk ] = cascade( @allocation_empty,@features_jerk,raw_filt.outdoor, 400,100,500,50);
+[ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_filt.outdoor,400,100,1000,50);
+% [ features.jerk ] = cascade( @allocation_empty,@features_jerk,raw_filt.outdoor, 400,100,500,50);
 
 %%   4. Feature extraction of 'Load' window size= 4s
 %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
-[ features.load ] = cascade( @allocation_empty,@features_load,raw_filt.outdoor, 400,100,500,50);
-[ features.acc ] = cascade( @allocation_empty,@features_acc,raw_filt.outdoor, 400,100,500,50);
+[ features.load ] = cascade( @allocation_empty,@features_load,raw_filt.outdoor, 400,100,1000,50);
+% [ features.acc ] = cascade( @allocation_empty,@features_acc,raw_filt.outdoor, 400,100,500,50);
 
 %%  5. Feature matrix
 [ featurematrix_loadrate ] = matrixmaker( features.loadrate);
@@ -46,45 +46,45 @@ featurematrix(:,11:24)= featurematrix_load(:,1:14);
 
 %% 6.SVM classifier activity (walking, jogging, running, incline up, incline down, stairs up, stairs down)
 % Trained and tested data, Random participants was excluded for validation, then cross-validation with 100 repeats
-activity_matrix=featurematrix(find(featurematrix(:,21)<4),:); % just running on different terrains included
+activity_matrix=featurematrix;%(find(featurematrix(:,21)<4),:); % just running on different terrains included
 [accuracyActivty] = activityClassifier(activity_matrix);
-final_accuracy_ac=mean(accuracyActivty);
+final_accuracy_ac=mean(accuracyActivty(find(accuracyActivty),1));
 x=sort(accuracyActivty);
 upperCV_ac=x(97,1);
 lowerCV_ac=x(3,1);
 
 [accuracyActivty1] = activityClassifier1(activity_matrix); % mean load, RMS load, energy load, entropy load
-final_accuracy_ac1=mean(accuracyActivty1);
+final_accuracy_ac1=mean(accuracyActivty1(find(accuracyActivty1),1));
 x=sort(accuracyActivty1);
 upperCV_ac1=x(97,1);
 lowerCV_ac1=x(3,1);
 
 [accuracyActivty2] = activityClassifier2(activity_matrix); % mean load, RMS load, energy load, entropy load, weight
-final_accuracy_ac2=mean(accuracyActivty2);
+final_accuracy_ac2=mean(accuracyActivty2(find(accuracyActivty2),1));
 x=sort(accuracyActivty2);
 upperCV_ac2=x(97,1);
 lowerCV_ac2=x(3,1);
 
 [accuracyActivty3] = activityClassifier3(activity_matrix); % mean load, RMS load, energy load, entropy load, weight, condition
-final_accuracy_ac3=mean(accuracyActivty3);
+final_accuracy_ac3=mean(accuracyActivty3(find(accuracyActivty3),1));
 x=sort(accuracyActivty3);
 upperCV_ac3=x(97,1);
 lowerCV_ac3=x(3,1);
 
 [accuracyActivty4] = activityClassifier4(activity_matrix); % mean load rate, RMS load rate, energy load rate, entropy load rate
-final_accuracy_ac4=mean(accuracyActivty4);
+final_accuracy_ac4=mean(accuracyActivty4(find(accuracyActivty4),1));
 x=sort(accuracyActivty4);
 upperCV_ac4=x(97,1);
 lowerCV_ac4=x(3,1);
 
 [accuracyActivty5] = activityClassifier5(activity_matrix); % mean load rate, RMS load rate, energy load rate, entropy load rate, weight
-final_accuracy_ac5=mean(accuracyActivty5);
+final_accuracy_ac5=mean(accuracyActivty5(find(accuracyActivty5),1));
 x=sort(accuracyActivty5);
 upperCV_ac5=x(97,1);
 lowerCV_ac5=x(3,1);
 
 [accuracyActivty6] = activityClassifier6(activity_matrix); % mean load rate, RMS load rate, energy load rate, entropy load rate, weight, condition
-final_accuracy_ac6=mean(accuracyActivty6);
+final_accuracy_ac6=mean(accuracyActivty6(find(accuracyActivty6),1));
 x=sort(accuracyActivty6);
 upperCV_ac6=x(97,1);
 lowerCV_ac6=x(3,1);
@@ -93,43 +93,43 @@ lowerCV_ac6=x(3,1);
 % Trained and tested data, Random participant was excluded for validation, then cross-validation with 100 repeats
 terrain_matrix=featurematrix; %(find(featurematrix(:,22)<4),:); % just running on different terrains included
 [accuracyTerrain] = terrainClassifier(terrain_matrix);  %all features
-final_accuracy_te=mean(accuracyTerrain);
+final_accuracy_te=mean(accuracyTerrain(find(accuracyTerrain),1));
 x=sort(accuracyTerrain);
 upperCV_te=x(97,1);    % upper convident interval
 lowerCV_te=x(3,1);     % lower convident interval
 
 [accuracyTerrain1] = terrainClassifier1(featurematrix); % mean load, RMS load, energy load, entropy load
-final_accuracy_te1=mean(accuracyTerrain1);
+final_accuracy_te1=mean(accuracyTerrain1(find(accuracyTerrain1),1));
 x=sort(accuracyTerrain1);
 upperCV_te1=x(97,1);
 lowerCV_te1=x(3,1);
 
 [accuracyTerrain2] = terrainClassifier2(featurematrix); % mean load, RMS load, energy load, entropy load, weight
-final_accuracy_te2=mean(accuracyTerrain2);
+final_accuracy_te2=mean(accuracyTerrain2(find(accuracyTerrain2),1));
 x=sort(accuracyTerrain2);
 upperCV_te2=x(97,1);
 lowerCV_te2=x(3,1);
 
 [accuracyTerrain3] = terrainClassifier3(featurematrix); % mean load, RMS load, energy load, entropy load, weight, condition
-final_accuracy_te3=mean(accuracyTerrain3);
+final_accuracy_te3=mean(accuracyTerrain3(find(accuracyTerrain3),1));
 x=sort(accuracyTerrain3);
 upperCV_te3=x(97,1);
 lowerCV_te3=x(3,1);
 
 [accuracyTerrain4] = terrainClassifier4(featurematrix); % mean load rate, RMS load rate, energy load rate, entropy load rate
-final_accuracy_te4=mean(accuracyTerrain4);
+final_accuracy_te4=mean(accuracyTerrain4(find(accuracyTerrain4),1));
 x=sort(accuracyTerrain4);
 upperCV_te4=x(97,1);
 lowerCV_te4=x(3,1);
 
 [accuracyTerrain5] = terrainClassifier5(featurematrix); % mean load rate, RMS load rate, energy load rate, entropy load rate, weight
-final_accuracy_te5=mean(accuracyTerrain5);
+final_accuracy_te5=mean(accuracyTerrain5(find(accuracyTerrain5),1));
 x=sort(accuracyTerrain5);
 upperCV_te5=x(97,1);
 lowerCV_te5=x(3,1);
 
 [accuracyTerrain6] = terrainClassifier6(featurematrix); % mean load rate, RMS load rate, energy load rate, entropy load rate, weight, condition
-final_accuracy_te6=mean(accuracyTerrain6);
+final_accuracy_te6=mean(accuracyTerrain6(find(accuracyTerrain6),1));
 x=sort(accuracyTerrain6);
 upperCV_te6=x(97,1);
 lowerCV_te6=x(3,1);

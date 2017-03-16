@@ -30,8 +30,10 @@ for i=1:100
         response, ...
         'Learners', template, ...
         'Coding', 'onevsone', ...
-        'ClassNames', [1; 2; 3]);
+        'ClassNames', [1; 2; 3]);%; 4; 5; 6 ;7]);
     
+%     partitionedModel = crossval(classificationSVM, 'KFold', 11);
+%     accuracy(i,1) = 1 - kfoldLoss(partitionedModel, 'LossFun', 'ClassifError');
     Xtest=trainingData(find(trainingData(:,24)==participant),:);  % test data for validation 
     inputTable_test = array2table(Xtest, 'VariableNames', {'mean_loadrate', 'max_loadrate', 'min_loadrate', 'var_loadrate', 'STD_loadrate', 'RMS_loadrate', 'mean_f_loadrate', 'dom_f_loadrate', 'energy_loadrate', 'entropy_loadrate', 'mean_load', 'max_load', 'min_load', 'var_load', 'STD_load', 'RMS_load', 'mean_f_load', 'dom_f_load', 'energy_load', 'entropy_load', 'speed', 'condition', 'weight', 'ID'});
     predictors_test = inputTable_test(:, predictorNames);
@@ -40,7 +42,7 @@ for i=1:100
     label= predict(classificationSVM,inputTable_test);  % testing data
     error=(find((label==response_test)==0));            % errors in labeling 
     accuracy(i,1)=length(error)/length(label);          % accuracy calculated from error and all data
-    
+%     
 end
 
 end
