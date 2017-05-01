@@ -206,9 +206,9 @@ for participant=[1:4 6:12]
     set(gca,'xticklabel',name);
     ylim([0 300])
     legend('Low load rate','Medium load rate','High load rate');
-    title(['Predicted activty, Participant ',num2str(participant)]);
-%     filename= (['Activty_Participant',num2str(participant),'.pdf']);
-%     print(filename,'-dpdf')
+    title(['Predicted running speed, Participant ',num2str(participant)]);
+    filename= (['Running_Participant',num2str(participant),'.pdf']);
+    print(filename,'-dpdf')
 end
 
 %% Excluding first participants to test classifier with incline and stairs
@@ -429,7 +429,7 @@ for participant=[1:4 6:12]
     high_stairsdown_part=stairsdown_part(find(stairsdown_part(:,1)>2.5e+7),1);
     D=[length(low_stairsdown_part) length(med_stairsdown_part) length(high_stairsdown_part)];
     
-    y=[X;Y;Z;A;B;C;D];
+    y=[X;Y;Z];%;A;B;C;D];
     ax1 = subplot(2,1,1);
     bar(ax1,y,'stacked');
     name = {'asphal';'grass';'soil';'inlcineup';'inclinedown';'stairsup';'stairsdown'};
@@ -481,7 +481,7 @@ for participant=[1:4 6:12]
     high_stairsdown_part=stairsdown_part(find(stairsdown_part(:,1)>2.5e+7),1);
     D=[length(low_stairsdown_part) length(med_stairsdown_part) length(high_stairsdown_part)];
         
-    y=[X;Y;Z;A;B;C;D];
+    y=[X;Y;Z];%;A;B;C;D];
     ax2 = subplot(2,1,2);
     bar(ax2,y,'stacked');
     name = {'asphal';'grass';'soil';'inlcineup';'inclinedown';'stairsup';'stairsdown'};

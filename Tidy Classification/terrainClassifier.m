@@ -2,16 +2,15 @@ function [accuracy,participant] = terrainClassifier(trainingData)
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
 accuracy=zeros(100,1);
-for i=1:100
-    
+for i=1:100  
     A=1:12;
     B=5;
     S = setdiff(A,B);
-    participant = S(randi(numel(S),1,1)); % Random sample of participant excluding 5th participant, he didn't take part
-    
+    participant = S(randi(numel(S),1,1)); % Random sample of participant excluding 5th participant, he didn't take part 
     X=trainingData(find(trainingData(:,24)~=participant),:); % excluding random participants from data set for validation
-    
-    inputTable = array2table(X, 'VariableNames', {'mean_loadrate', 'max_loadrate', 'min_loadrate', 'var_loadrate', 'STD_loadrate', 'RMS_loadrate', 'mean_f_loadrate', 'dom_f_loadrate', 'energy_loadrate', 'entropy_loadrate', 'mean_load', 'max_load', 'min_load', 'var_load', 'STD_load', 'RMS_load', 'mean_f_load', 'dom_f_load', 'energy_load', 'entropy_load', 'speed', 'condition', 'weight', 'ID'});
+    temp=randi(length(X),length(X),1); 
+    Xnew=X(temp,:);   %resampled vector 
+    inputTable = array2table(Xnew, 'VariableNames', {'mean_loadrate', 'max_loadrate', 'min_loadrate', 'var_loadrate', 'STD_loadrate', 'RMS_loadrate', 'mean_f_loadrate', 'dom_f_loadrate', 'energy_loadrate', 'entropy_loadrate', 'mean_load', 'max_load', 'min_load', 'var_load', 'STD_load', 'RMS_load', 'mean_f_load', 'dom_f_load', 'energy_load', 'entropy_load', 'speed', 'condition', 'weight', 'ID'});
     
     predictorNames = {'mean_loadrate', 'max_loadrate', 'min_loadrate', 'var_loadrate', 'STD_loadrate', 'RMS_loadrate', 'mean_f_loadrate', 'dom_f_loadrate', 'energy_loadrate', 'entropy_loadrate', 'mean_load', 'max_load', 'min_load', 'var_load', 'STD_load', 'RMS_load', 'mean_f_load', 'dom_f_load', 'energy_load', 'entropy_load', 'speed', 'weight', 'ID'};
     predictors = inputTable(:, predictorNames);

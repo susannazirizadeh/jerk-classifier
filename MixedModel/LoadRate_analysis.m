@@ -88,18 +88,21 @@ for m=3:12
     catch
         display(['fitting error for participant ' , num2str(m)])
     end
+    x1=x1*10^4;
+    x2=x2*10^4;
+    x3=x3*10^4;
     hold on
     grid on
     plot(x1,y1,'ro',x2,y2,'bo',x3,y3,'go','LineWidth',2)
-    %           title(['Smartphone loadrate - Force plate loadrate ', device{button}] );
-    %           xlabel('Load rate from ground reaction force [N/s]');
-    %           ylabel('Load rate smartphone [N/s]');
-    %           legend('walking 5km/h','running 8km/h', 'running 12km/h')
+              title(['Smartphone loadrate - Force plate loadrate '] );%, device{button}] );
+              xlabel('Load rate from ground reaction force [N/s]');
+              ylabel('Load rate smartphone [N/s]');
+               legend('walking 5km/h','running 8km/h', 'running 12km/h')
     
 end
       
-  filename= ('Loadrate_SP2_paper.pdf');
-  print(filename,'-dpdf')
+  filename= ('Loadrate_SP2_paper.eps');
+   print(filename,'-deps')
   
   
 %% Plot without log

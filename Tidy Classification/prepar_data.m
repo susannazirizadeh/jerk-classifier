@@ -24,7 +24,7 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 %  end
 
 % decided cut-off filter 0.5 Hz and 10Hz
-%% 2. Filter data with band pass filter cut of 0.5Hz and 10Hz
+%% 2. Filter data with band pass filter cut of 0.5Hz and 15Hz
 % Bandpass filter for cascade cell array
 [ raw_filt.outdoor ] = cascade( @allocation_empty,@bandpass,raw_int.outdoor,0,0,0,0);
 
@@ -185,4 +185,4 @@ results(7,4)=final_accuracy_te6;
 results(7,5)=lowerCV_te6;
 results(7,6)=upperCV_te6;
 
-results_table = array2table(results, 'VariableNames', {'accurancy_activity','low_CV_activty','up_CV_activty','accurancy_terrain','low_CV_terrain','up_CV_terrain'});
+results_table_smartphone = array2table(results, 'VariableNames', {'accurancy_activity','low_CV_activty','up_CV_activty','accurancy_terrain','low_CV_terrain','up_CV_terrain'});
