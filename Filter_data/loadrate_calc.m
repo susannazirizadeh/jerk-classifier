@@ -1,5 +1,5 @@
 %% Transforming raw_int into loadrate with cutoff before 1000 and 1000 before end
-%    load raw_int
+    load raw_int
 weight= [73.815 87.34 69.69 85.1 70.4 80.5 72.37 93.49 78.2 85.8 78.1 73.1]; %Weights of each participants
 BWper=[ 0.2 0.5 0.7 0.8 0.9 1.0]; % Bodyweight percentages that they were running at
 for i=1:6
@@ -31,7 +31,7 @@ for m= 1:12 %Participants
                     for p=1:6   % Gravity
                         if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
 %                             loadrate.treadmill{m}{n}{o}{p}(:,2)=jerk_xyz(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
-                                [loadrate.treadmill{m}{n}{o}{p}(:,2),loadrate.treadmill{m}{n}{o}{p}(:,3)]=jerk_pos(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
+                                [loadrate.treadmill{m}{n}{o}{p}(:,2),loadrate.treadmill{m}{n}{o}{p}(:,3)]=jerk_all(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
                                 loadrate.treadmill{m}{n}{o}{p}(:,2)=loadrate.treadmill{m}{n}{o}{p}(:,2).*BWperweight(p,m);
                                 loadrate.treadmill{m}{n}{o}{p}(:,1)=raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1);
                         end

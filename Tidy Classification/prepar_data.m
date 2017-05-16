@@ -26,16 +26,16 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 % decided cut-off filter 0.5 Hz and 10Hz
 %% 2. Filter data with band pass filter cut of 0.5Hz and 15Hz
 % Bandpass filter for cascade cell array
-[ raw_filt.outdoor ] = cascade( @allocation_empty,@bandpass,raw_int.outdoor,0,0,0,0);
+% [ raw_filt.outdoor ] = cascade( @allocation_empty,@bandpass,raw_int.outdoor,0,0,0,0);
 
 %%   3. Feature extraction of 'Load rate' window size= 4s
 %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
-[ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_filt.outdoor,300,100,1000,50);
+[ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_int.outdoor,700,100,1000,50);
 % [ features.jerk ] = cascade( @allocation_empty,@features_jerk,raw_filt.outdoor, 400,100,500,50);
 
 %%   4. Feature extraction of 'Load' window size= 4s
 %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
-[ features.load ] = cascade( @allocation_empty,@features_load,raw_filt.outdoor, 300,100,1000,50);
+[ features.load ] = cascade( @allocation_empty,@features_load,raw_int.outdoor, 700,100,1000,50);
 % [ features.acc ] = cascade( @allocation_empty,@features_acc,raw_filt.outdoor, 400,100,500,50);
 
 %%  5. Feature matrix
@@ -43,7 +43,7 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 [ featurematrix_load ] = matrixmaker( features.load);
 featurematrix(:,1:10)= featurematrix_loadrate(:,1:10);
 featurematrix(:,11:24)= featurematrix_load(:,1:14);
-
+ 
 
 %% 6.SVM classifier activity (walking, jogging, running, incline up, incline down, stairs up, stairs down)
 % Trained and tested data, Random participants was excluded for validation, then cross-validation with 100 repeats
@@ -191,48 +191,48 @@ results_table_smartwatch = array2table(results, 'VariableNames', {'accurancy_act
 toc
 
 %% Windo size choice
-w2s(1,1)=3652.44;
+w2s(1,1)=9889.27;
 w2s(1,2)=73;
 
-w3s(1,1)=1451.79;
-w3s(1,2)=75;
+w3s(1,1)=1564.85;
+w3s(1,2)=76;
 
-w4s(1,1)=933.80;
-w4s(1,2)=75;
+w4s(1,1)=976.52;
+w4s(1,2)=76;
 
-w5s(1,1)=635.64;
+w5s(1,1)=684.23;
 w5s(1,2)=77;
 
-w6s(1,1)=485.69;
-w6s(1,2)=77;
+w6s(1,1)=560.69;
+w6s(1,2)=76;
 
-w7s(1,1)=462.90;
-w7s(1,2)=76;
+w7s(1,1)=425.47;
+w7s(1,2)=78;
 
-w8s(1,1)=420.16;
-w8s(1,2)=75;
+w8s(1,1)=366.95;
+w8s(1,2)=77;
 
 % ----------------
 
-w2st(1,1)=3652.44;
-w2st(1,2)=64;
+w2st(1,1)=9889.27;
+w2st(1,2)=63;
 
-w3st(1,1)=1451.79;
-w3st(1,2)=65;
+w3st(1,1)=1564.85;
+w3st(1,2)=64;
 
-w4st(1,1)=933.80;
-w4st(1,2)=60;
+w4st(1,1)=976.52;
+w4st(1,2)=61;
 
-w5st(1,1)=635.64;
-w5st(1,2)=61;
+w5st(1,1)=685.64;
+w5st(1,2)=63;
 
-w6st(1,1)=485.69;
-w6st(1,2)=62;
+w6st(1,1)=560.36;
+w6st(1,2)=61;
 
-w7st(1,1)=462.90;
-w7st(1,2)=57;
+w7st(1,1)=425.47;
+w7st(1,2)=60;
 
-w8st(1,1)=420.16;
+w8st(1,1)=366.95;
 w8st(1,2)=59;
 
 figure

@@ -2,8 +2,9 @@ function [j_new, positives] = jerk_fp(t,x)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 % t= timestemp
-% v= acceleration vector
-sps=round(1/mean(t(2:end,1)-t(1:end-1,1)));
+% v= acceleration vect
+tnew=t/10^3;
+sps=round(1/mean(tnew(2:end,1)-tnew(1:end-1,1)));
 n=length(t);
 j=zeros(n,1);
 positives=zeros(n,1);

@@ -31,7 +31,7 @@ for m= 1:12 %Participants
                     for p=1:6   % Gravity
                         if isempty( raw_int.treadmill{m}{n}{o}{p}) ~= 1
 %                             loadrate.treadmill{m}{n}{o}{p}(:,2)=jerk_xyz(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
-                                [loadrate.treadmill{m}{n}{o}{p}(:,2),loadrate.treadmill{m}{n}{o}{p}(:,3)]=jerk_pos(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
+                                [loadrate.treadmill{m}{n}{o}{p}(:,2),loadrate.treadmill{m}{n}{o}{p}(:,3)]=jerk_all(raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1),raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,:));
                                 loadrate.treadmill{m}{n}{o}{p}(:,2)=loadrate.treadmill{m}{n}{o}{p}(:,2).*BWperweight(p,m);
                                 loadrate.treadmill{m}{n}{o}{p}(:,1)=raw_int.treadmill{m}{n}{o}{p}(1000:end-1000,1);
                         end
