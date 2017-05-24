@@ -187,7 +187,7 @@ results(7,4)=final_accuracy_te6;
 results(7,5)=lowerCV_te6;
 results(7,6)=upperCV_te6;
 
-results_table_smartwatch = array2table(results, 'VariableNames', {'accurancy_activity','low_CV_activty','up_CV_activty','accurancy_terrain','low_CV_terrain','up_CV_terrain'});
+results_table_smartphone = array2table(results, 'VariableNames', {'accurancy_activity','low_CV_activty','up_CV_activty','accurancy_terrain','low_CV_terrain','up_CV_terrain'});
 toc
 
 %% Windo size choice

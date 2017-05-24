@@ -12,8 +12,8 @@ title('Histogram of whole data set')
 xlabel('Load rate value')
 ylabel('Density')
 %%
- lower=3.5968e+03;
- upper=1.0518e+04;
+ lower=2.7682e+03;
+ upper=5.6314e+03;
 % low= featurematrix_loadrate(find(featurematrix_loadrate(:,1)<1.5e+7),1);
 % med= featurematrix_loadrate(find(featurematrix_loadrate(:,1)>1.5e+7 & featurematrix_loadrate(:,1)<upper),1);
 % high= featurematrix_loadrate(find(featurematrix_loadrate(:,1)>upper),1);
@@ -25,57 +25,57 @@ length(med);
 length(high);
 
 %% 2. Creat pie-charts for every single activty
-figure;
- featurematrix_loadrate=featurematrix_loadrate(find(featurematrix_loadrate(:,1)>0.1e+7),:);
+% figure;
+%  featurematrix_loadrate=featurematrix_loadrate(find(featurematrix_loadrate(:,1)>0.1e+7),:);
 walk=featurematrix_loadrate(find(featurematrix_loadrate(:,11)==1),1);
 low_walk=walk(find(walk<lower),1);
 med_walk=walk(find(walk>lower & walk<upper),1);
 high_walk=walk(find(walk(:,1)>upper),1);
 X=[length(low_walk) length(med_walk) length(high_walk)];
-labels = {'Low','Medium','High'};
-ax1 = subplot(2,3,1);
-pie(ax1,X,labels)
-title(ax1,'Walk');
+% labels = {'Low','Medium','High'};
+% ax1 = subplot(2,3,1);
+% pie(ax1,X,labels)
+% title(ax1,'Walk');
 
 jog=featurematrix_loadrate(find(featurematrix_loadrate(:,11)==2),1);
 low_jog=jog(find(jog<1.5e+7),1);
 med_jog=jog(find(jog>lower & jog<upper),1);
 high_jog=jog(find(jog(:,1)>upper),1);
 Y=[length(low_jog) length(med_jog) length(high_jog)];
-labels = {'Low','Medium','High'};
-ax2 = subplot(2,3,2);
-pie(ax2,Y,labels)
-title(ax2,'Jog');
+% labels = {'Low','Medium','High'};
+% ax2 = subplot(2,3,2);
+% pie(ax2,Y,labels)
+% title(ax2,'Jog');
 
 run=featurematrix_loadrate(find(featurematrix_loadrate(:,11)==3),1);
 low_run=run(find(run<lower),1);
 med_run=run(find(run>lower & run<upper),1);
 high_run=run(find(run(:,1)>upper),1);
 Z=[length(low_run) length(med_run) length(high_run)];
-labels = {'Low','Medium','High'};
-ax3 = subplot(2,3,3);
-pie(ax3,Z,labels)
-title(ax3,'Run');
+% labels = {'Low','Medium','High'};
+% ax3 = subplot(2,3,3);
+% pie(ax3,Z,labels)
+% title(ax3,'Run');
 
 slow_stairs=featurematrix_loadrate(find(featurematrix_loadrate(:,11)==4),1);
 low_slow_stairs=slow_stairs(find(slow_stairs<lower),1);
 med_slow_stairs=slow_stairs(find(slow_stairs>lower & slow_stairs<upper),1);
 high_slow_stairs=slow_stairs(find(slow_stairs(:,1)>upper),1);
 A=[length(low_slow_stairs) length(med_slow_stairs) length(high_slow_stairs)];
-labels = {'Low','Medium','High'};
-ax4 = subplot(2,3,4);
-pie(ax4,A,labels)
-title(ax4,'Slow stairs');
+% labels = {'Low','Medium','High'};
+% ax4 = subplot(2,3,4);
+% pie(ax4,A,labels)
+% title(ax4,'Slow stairs');
 
 fast_stairs=featurematrix_loadrate(find(featurematrix_loadrate(:,11)==5),1);
 low_fast_stairs=fast_stairs(find(fast_stairs<lower),1);
 med_fast_stairs=fast_stairs(find(fast_stairs>lower & fast_stairs<upper),1);
 high_fast_stairs=fast_stairs(find(fast_stairs(:,1)>upper),1);
 B=[length(low_fast_stairs) length(med_fast_stairs) length(high_fast_stairs)];
-labels = {'Low','Medium','High'};
-ax5 = subplot(2,3,5);
-pie(ax5,B,labels)
-title(ax5,'Fast stairs');
+% labels = {'Low','Medium','High'};
+% ax5 = subplot(2,3,5);
+% pie(ax5,B,labels)
+% title(ax5,'Fast stairs');
 
 %% 3. Creat Histogram with different categorie
 figure;
@@ -96,7 +96,7 @@ xlim([0 5e+7])
 ylim([0 100])
 
 %% Bar for all participants
-figure;
+ figure;
 y=[length(low_walk) length(med_walk) length(high_walk);...
     length(low_jog) length(med_jog) length(high_jog);...
     length(low_run) length(med_run) length(high_run);...
@@ -110,7 +110,7 @@ legend('Low load rate','Medium load rate','High load rate');
 %% Excluding first participants to test classifier running on him
  load featurematrix
 featurematrix=featurematrix(find(featurematrix(:,21)<4),:);
-for participant=1%[1:4 6:12]
+for participant=[1:4 6:12]
     % participant=2;
     Xtrain=featurematrix(find(featurematrix(:,24)~=participant),:); % Training data % excluding random participants from data set for validation
     inputTable = array2table(Xtrain, 'VariableNames', {'mean_loadrate', 'max_loadrate', 'min_loadrate', 'var_loadrate', 'STD_loadrate', 'RMS_loadrate', 'mean_f_loadrate', 'dom_f_loadrate', 'energy_loadrate', 'entropy_loadrate', 'mean_load', 'max_load', 'min_load', 'var_load', 'STD_load', 'RMS_load', 'mean_f_load', 'dom_f_load', 'energy_load', 'entropy_load', 'speed', 'condition', 'weight', 'ID'});
@@ -223,6 +223,7 @@ for participant=1%[1:4 6:12]
     filename= (['Running_Participant',num2str(participant),'.pdf']);
     print(filename,'-dpdf')
 end
+
 
 %% Excluding first participants to test classifier with incline and stairs
  load featurematrix
