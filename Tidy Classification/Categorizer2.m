@@ -106,7 +106,7 @@ figure;
      name = {'P1';'P2';'P3';'P4';'P5';'P6';'P7';'P8';'P9';'P10';'P11'};
     ylabel('Density')
      ylim([0 350])
-    legend('Low','Recommended','Intense');
+    legend('Low','Moderate','Intensive');
     title('True activty');
     
     y2=[X_new_test;Y_new_true;Z_new_true];
@@ -116,7 +116,7 @@ figure;
     set(gca,'xticklabel',name);
     ylabel('Denisty')
      ylim([0 350])
-    legend('Low','Recommended','Intense');
+    legend('Low','Moderate','Intensive');
     title('Predicted running speed');
     filename= ('Running_Participant.pdf');
     print(filename,'-dpdf')
@@ -211,7 +211,7 @@ figure;
      set(gca,'xticklabel',name);
     ylabel('Density')
      ylim([0 350])
-    legend('Low','Recommended','Intense');
+    legend('Low','Moderate','Intensive');
     title('True walking');
     
     y2=Y_new_true;
@@ -239,7 +239,7 @@ figure;
      set(gca,'xticklabel',name);
     ylabel('Density')
      ylim([0 350])
-    legend('Low','Recommended','Intense');
+    legend('Low','Moderate','Intensive');
     title('Predicted walking');
     
     y5=Y_new_test;
@@ -351,7 +351,7 @@ figure;
      set(gca,'xticklabel',name);
     ylabel('Density')
 %      ylim([0 350])
-    legend('Low','Recommended','Intense');
+    legend('Low','Moderate','Intensive');
     title('True asphalt');
     
     y2=Y_new_true;
@@ -379,7 +379,7 @@ figure;
      set(gca,'xticklabel',name);
     ylabel('Density')
      ylim([0 350])
-    legend('Low','Recommended','Intense');
+    legend('Low','Moderate','Intensive');
     title('Predicted asphalt');
     
     y5=Y_new_test;

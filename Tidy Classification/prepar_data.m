@@ -6,12 +6,12 @@
 % 5. Feature matrix
 % 6. SVM classifier activity (walking, jogging, running,incline up, incline down, stairs up, stairs down)
 % 7. SVM classifier for terrains (asphalt, grass, stony/muddy path)
-load raw_int
-partic= cellstr(['P1 ';'P2 ';'P3 ';'P4 ';'P5 ';'P6 ';'P7 ';'P8 ';'P9 ';'P10';'P11';'P12']);
-device  = cellstr(['SP1';'SW1';'GPS']);
-speed = cellstr(['5km/h ';'8km/h ';'12km/h';'slow  ';'fast  ']);
-con= cellstr(['asphalt    ';'grass      ';'soil       ';'inlcineup  ';'inclinedown';'stairsup   ';'stairsdown ']);
-weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]; %Weights of each participants
+% load raw_int
+% partic= cellstr(['P1 ';'P2 ';'P3 ';'P4 ';'P5 ';'P6 ';'P7 ';'P8 ';'P9 ';'P10';'P11';'P12']);
+% device  = cellstr(['SP1';'SW1';'GPS']);
+% speed = cellstr(['5km/h ';'8km/h ';'12km/h';'slow  ';'fast  ']);
+% con= cellstr(['asphalt    ';'grass      ';'soil       ';'inlcineup  ';'inclinedown';'stairsup   ';'stairsdown ']);
+% weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]; %Weights of each participants
 %% 1. PSD estimate for cut-off frequency (Welch's PSD estimate)
 %  for i=6:7
 % x= raw_int.outdoor{2}{1}{4}{i}(:,2);
@@ -30,19 +30,19 @@ weight= [67.1; 79.4; 63.2; 77.1; 63.5; 72.7; 65.5; 84.8; 70.5; 77.5; 70.6; 62.7]
 
 %%   3. Feature extraction of 'Load rate' window size= 4s
 %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
-[ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_int.outdoor,700,100,1000,50);
+% [ features.loadrate ] = cascade( @allocation_empty,@features_loadrate,raw_int.outdoor,700,100,1000,50);
 % [ features.jerk ] = cascade( @allocation_empty,@features_jerk,raw_filt.outdoor, 400,100,500,50);
 
 %%   4. Feature extraction of 'Load' window size= 4s
 %      3.1 Time-domain (mean, variance, correlation, min, max, STD, RMS) %  3.2 Frequency-domain (FFT, main F, max, F, energy, entropy)
-[ features.load ] = cascade( @allocation_empty,@features_load,raw_int.outdoor, 700,100,1000,50);
+% [ features.load ] = cascade( @allocation_empty,@features_load,raw_int.outdoor, 700,100,1000,50);
 % [ features.acc ] = cascade( @allocation_empty,@features_acc,raw_filt.outdoor, 400,100,500,50);
 
 %%  5. Feature matrix
-[ featurematrix_loadrate ] = matrixmaker( features.loadrate);
-[ featurematrix_load ] = matrixmaker( features.load);
-featurematrix(:,1:10)= featurematrix_loadrate(:,1:10);
-featurematrix(:,11:24)= featurematrix_load(:,1:14);
+% [ featurematrix_loadrate ] = matrixmaker( features.loadrate);
+% [ featurematrix_load ] = matrixmaker( features.load);
+% featurematrix(:,1:10)= featurematrix_loadrate(:,1:10);
+% featurematrix(:,11:24)= featurematrix_load(:,1:14);
  
 
 %% 6.SVM classifier activity (walking, jogging, running, incline up, incline down, stairs up, stairs down)
@@ -236,9 +236,10 @@ w8st(1,1)=366.95;
 w8st(1,2)=59;
 
 figure
-plot(w2s(:,1),w2s(:,2),'g*',w3s(1,1),w3s(1,2),'r*', w4s(1,1),w4s(1,2),'b*', w5s(1,1),w5s(1,2),'c*',w6s(1,1),w6s(1,2),'m*',w7s(1,1),w7s(1,2),'k*',w8s(1,1),w8s(1,2),'ko','LineWidth',2,'MarkerSize',10);
+semilogx(w2s(:,1),w2s(:,2),'g*',w3s(1,1),w3s(1,2),'r*', w4s(1,1),w4s(1,2),'b*', w5s(1,1),w5s(1,2),'c*',w6s(1,1),w6s(1,2),'m*',w7s(1,1),w7s(1,2),'k*',w8s(1,1),w8s(1,2),'ko','LineWidth',2,'MarkerSize',10);
 legend('Window size 2s','Window size 3s','Window size 4s','Window size 5s','Window size 6s','Window size 7s','Window size 8s');
 ylim([70 80])
+grid on
 title('Activity Window size');
 xlabel('Computing time [s]');
 ylabel('Accuracy of classifier [%]');
@@ -246,9 +247,10 @@ filename= ('Activity_window.pdf');
 print(filename,'-dpdf')
 
 figure
-plot(w2st(:,1),w2st(:,2),'g*',w3st(1,1),w3st(1,2),'r*', w4st(1,1),w4st(1,2),'b*', w5st(1,1),w5st(1,2),'c*',w6st(1,1),w6st(1,2),'m*',w7st(1,1),w7st(1,2),'k*',w8st(1,1),w8st(1,2),'ko','LineWidth',2,'MarkerSize',10);
+semilogx(w2st(:,1),w2st(:,2),'g*',w3st(1,1),w3st(1,2),'r*', w4st(1,1),w4st(1,2),'b*', w5st(1,1),w5st(1,2),'c*',w6st(1,1),w6st(1,2),'m*',w7st(1,1),w7st(1,2),'k*',w8st(1,1),w8st(1,2),'ko','LineWidth',2,'MarkerSize',10);
 legend('Window size 2s','Window size 3s','Window size 4s','Window size 5s','Window size 6s','Window size 7s','Window size 8s');
 ylim([55 67])
+grid on
 title('Terrain Window size');
 xlabel('Computing time [s]');
 ylabel('Accuracy of classifier [%]');
